@@ -9,7 +9,7 @@ angular.module("GoodPhood.Services", [])
                method : type,
                data : data
               }).then(function(resp){
-                     deferred.resolve(resp);
+                     deferred.resolve(resp.data);
                 }, function(err){
                     alert("error");
                     deferred.reject(err); 

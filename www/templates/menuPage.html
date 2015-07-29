@@ -1,50 +1,86 @@
 
 
 <ion-view view-title="MENU">
-       <ion-nav-bar class="bar-stable">
+    <ion-nav-bar class="bar-stable">
 
-  <!--<ion-nav-buttons side="left">
-    <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
-    </button>
-  </ion-nav-buttons> -->
-  <ion-nav-back-button>
-  </ion-nav-back-button> 
-     
-</ion-nav-bar>
-    
-    
+        <!--<ion-nav-buttons side="left">
+          <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+          </button>
+        </ion-nav-buttons> -->
+        <ion-nav-back-button>
+        </ion-nav-back-button>
+
+    </ion-nav-bar>
     <ion-content>
-      <!-- The content of the page --> 
-        <ion-tabs class="tabs-positive tabs-icon-only"> 
 
-          <ion-tab title="Tab1" icon-on="ion-ios-filing" icon-off="ion-ios-filing-outline">
-                
-            <!-- Tab 1 content -->
-          </ion-tab>
 
-          <ion-tab title="Tab2" icon-on="ion-ios-clock" icon-off="ion-ios-clock-outline">
-            <!-- Tab 2 content -->
-          </ion-tab>
+        <div class="sections" ng-repeat="section in sections">
+            <h2>{{ section.SectionName}}</h2>
+            <ion-list>
 
-          <ion-tab title="Tab3" icon-on="ion-ios-gear" icon-off="ion-ios-gear-outline">
-            <!-- Tab 3 content -->
-          </ion-tab>
+                <div class="categories" ng-repeat="category in section.Categories">
+                    <ion-item class="item-stable"
+                              ng-click="toggleGroup(category)"
+                              ng-class="{active: isGroupShown(category)}">
+                        <i class="icon" ng-class="isGroupShown(category) ? 'ion-minus' : 'ion-plus'"></i>
+                        &nbsp;
+                        {{category.CategoryName}}
+                    </ion-item>
+                    <div class="items" ng-show="isGroupShown(category)">
+                        <ion-item class="item-accordion"
+                                  ng-repeat="items in category.Items">
 
-          <ion-tab title="Tab4" icon-on="ion-ios-gear" icon-off="ion-ios-gear-outline">
-            <!-- Tab 3 content -->
-          </ion-tab>
+                            <h2>{{items.ItemName}}</h2>
+                        </ion-item>
+                    </div>
+                </div>
+            </ion-list>
 
-          <ion-tab title="Tab5" icon-on="ion-ios-gear" icon-off="ion-ios-gear-outline">
-            <!-- Tab 3 content -->
-          </ion-tab>
 
-        </ion-tabs>
-         
-        
-        
-<a class="button icon-left ion-chevron-left button-calm" href="#/gp/table">TABLE</a>
-<a class="button icon-right ion-chevron-right button-calm" href="#/gp/review">REVIEWS</a>
-        
+            <!--
+             <h4>{{category.CategoryName}}</h4>
+        <div class="list card" ng-repeat="items in category.Items">
+
+          <div class="item item-avatar">
+            <img src="mcfly.jpg">
+            <h2>{{items.ItemName}}</h2>
+          </div>      -->
+            <!--
+           <div class="item item-body">
+             <img class="full-image" src="delorean.jpg">
+             <p>
+               This is a "Facebook" styled Card. The header is created from a Thumbnail List item,
+               the content is from a card-body consisting of an image and paragraph text. The footer
+               consists of tabs, icons aligned left, within the card-footer.
+             </p>
+             <p>
+               <a href="#" class="subdued">1 Like</a>
+               <a href="#" class="subdued">5 Comments</a>
+             </p>
+           </div>
+
+           <div class="item tabs tabs-secondary tabs-icon-left">
+             <a class="tab-item" href="#">
+               <i class="icon ion-thumbsup"></i>
+               Like
+             </a>
+             <a class="tab-item" href="#">
+               <i class="icon ion-chatbox"></i>
+               Comment
+             </a>
+             <a class="tab-item" href="#">
+               <i class="icon ion-share"></i>
+               Share
+             </a>
+           </div>   -->
+
+        </div>   </div>
+        </div>
+
+
+        <a class="button icon-left ion-chevron-left button-calm" href="#/gp/table">TABLE</a>
+        <a class="button icon-right ion-chevron-right button-calm" href="#/gp/review">REVIEWS</a>
+
     </ion-content>
-  </ion-view>
+</ion-view>
 
