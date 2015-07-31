@@ -1,0 +1,6 @@
+{
+    "jscodehints.detectedExclusions": [
+        "/Volumes/MYPERSONAL/NODEAPPS/GPAPP/www/js/services/masterServices.js",
+        "/Volumes/MYPERSONAL/NODEAPPS/GPAPP/www/js/directives/appDirectives.js"
+    ]
+}

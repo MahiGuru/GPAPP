@@ -1,41 +1,46 @@
-angular.module("GoodPhood.appCtrl", ['GoodPhood.Services'])
-.controller('loginCtrl', function($scope){
+angular.module("GoodPhood.appCtrl", ['GoodPhood.Services', 'GoodPhood.directive'])
+    .controller('loginCtrl', function ($scope) {
 
-})
-.controller('menuCtrl', function($scope, appService){
-    appService.gpService("create/1/1/1", "GET", null).then(function(resp){
-        $scope.sampleMenuData = resp;
-        $scope.sections = resp.menu.Sections;
-        /*
-         * if given group is the selected group, deselect it
-         * else, select the given group
-         */
-        /*$scope.toggleGroup = function(group) {
-            if ($scope.isGroupShown(group)) {
-                $scope.shownGroup = null;
-            } else {
-                $scope.shownGroup = group;
-            }
-        };
-        $scope.isGroupShown = function(group) {
-            return $scope.shownGroup === group;
-        };
-          */
+    })
+    .controller('menuCtrl', function ($scope, appService) {
+        $scope.venueMenu = '';
 
-        $scope.toggleGroup = function(group) {
-            if ($scope.isGroupShown(group)) {
-                $scope.shownGroup = null;
-            } else {
-                $scope.shownGroup = group;
+        appService.gpService("create/1/1/1", "GET", null).then(function (resp) {
+
+            $scope.venueMenu = resp.menu.Sections;
+            $scope.sampleMenuData = resp;
+            //$scope.sections = resp.menu.Sections;
+            $scope.OrderId = resp.orderId;
+            /********* Collapsible ************/
+
+        });
+        $scope.$watch("venueMenu", function (newValue, oldValue) {
+            if (!angular.equals(newValue, oldValue)) {
+                $scope.sections = newValue;
+
             }
-        };
-        $scope.isGroupShown = function(group) {
-            return $scope.shownGroup === group;
-        };
-    
+
+        })
+
+
+    }).controller('reviewCtrl', function ($scope, appService) {
+        $scope.reviewData = "Scope from Review";
+        $scope.ordersResponce = '';
+        appService.gpService("vieworder/1", "GET", null).then(function (viewOrderResponce) {
+            $scope.ordersResponce = viewOrderResponce;
+        })
+        $scope.$watch("ordersResponce", function (newValue, oldValue) {
+            //alert("We are in watch" + newValue)
+            //alert($scope.ordersResponce); 
+            if (!angular.equals(newValue, oldValue)) {
+                $scope.reviewResponce = newValue;
+                $scope.reviewItems = newValue.reviewItems;
+                $scope.confirmedItems = newValue.confirmedItems;
+            }
+        })
+
+
+
+
+
     });
-    
-    
-}).controller('reviewCtrl', function($scope){
-    $scope.reviewData = "Scope from Review";
-});
