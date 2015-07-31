@@ -2,7 +2,7 @@ angular.module("GoodPhood.appCtrl", ['GoodPhood.Services', 'GoodPhood.directive'
     .controller('loginCtrl', function ($scope) {
 
     })
-    .controller('menuCtrl', function ($scope, appService) {
+    .controller('menuCtrl', function ($scope, appService, $ionicSlideBoxDelegate) {
         $scope.venueMenu = '';
 
         appService.gpService("create/1/1/1", "GET", null).then(function (resp) {
@@ -12,8 +12,11 @@ angular.module("GoodPhood.appCtrl", ['GoodPhood.Services', 'GoodPhood.directive'
             //$scope.sections = resp.menu.Sections;
             $scope.OrderId = resp.orderId;
             /********* Collapsible ************/
+                $ionicSlideBoxDelegate.update();
 
         });
+       
+    
         $scope.$watch("venueMenu", function (newValue, oldValue) {
             if (!angular.equals(newValue, oldValue)) {
                 $scope.sections = newValue;

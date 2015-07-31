@@ -1,5 +1,3 @@
-
-
 <ion-view view-title="MENU">
     <ion-nav-bar class="bar-stable">
 
@@ -12,36 +10,66 @@
 
     </ion-nav-bar>
     <ion-content>
- 
+       
         
-        <my-tabs>
+          <my-tabs>
             <div class="sections" ng-repeat="section in sections">
-          <my-pane title="{{ section.SectionName}}">
-              <ion-list>
-             <div class="categories" ng-repeat="category in section.Categories">
-                    <ion-item class="item-stable"
-                              ng-click="toggleGroup(category)"
-                              ng-class="{active: isGroupShown(category)}">
-                        <i class="icon" ng-class="isGroupShown(category) ? 'ion-minus' : 'ion-plus'"></i>
-                        &nbsp;
-                        {{category.CategoryName}}
-                    </ion-item>
-                    <div class="items" ng-show="isGroupShown(category)">
-                        <ion-item class="item-accordion"
-                                  ng-repeat="items in category.Items">
-
-                            <h2>{{items.ItemName}}</h2>
-                        </ion-item>
-                    </div>
-                </div>
-              </ion-list>
-          </my-pane>
-            </div> 
+                <my-pane title="{{ section.SectionName}}">
+                    
+                </my-pane>
+            </div>
         </my-tabs>
         
         
         
         
+        
+        <ion-slide-box active-slide="myActiveSlide" on-slide-changed="slideHasChanged($index)">
+            
+            <ion-slide ng-repeat="section in sections"> 
+                <div class="box blue"> 
+                            <ion-list>
+                                <div class="categories" ng-repeat="category in section.Categories">
+                                    <ion-item class="item-stable" ng-click="toggleGroup(category)" ng-class="{active: isGroupShown(category)}">
+                                        <i class="icon" ng-class="isGroupShown(category) ? 'ion-minus' : 'ion-plus'"></i> &nbsp; {{category.CategoryName}}
+                                    </ion-item>
+                                    <div class="items" ng-show="isGroupShown(category)">
+                                        <ion-item class="item-accordion" ng-repeat="items in category.Items"> 
+                                            <h2>{{items.ItemName}}</h2>
+                                        </ion-item>
+                                    </div>
+                                </div>
+                            </ion-list>  
+                
+                </div>
+                     
+            </ion-slide>
+             
+
+        </ion-slide-box>
+        <!--<my-tabs>
+            <div class="sections" ng-repeat="section in sections">
+                <my-pane title="{{ section.SectionName}}">
+                    <ion-list>
+                        <div class="categories" ng-repeat="category in section.Categories">
+                            <ion-item class="item-stable" ng-click="toggleGroup(category)" ng-class="{active: isGroupShown(category)}">
+                                <i class="icon" ng-class="isGroupShown(category) ? 'ion-minus' : 'ion-plus'"></i> &nbsp; {{category.CategoryName}}
+                            </ion-item>
+                            <div class="items" ng-show="isGroupShown(category)">
+                                <ion-item class="item-accordion" ng-repeat="items in category.Items">
+
+                                    <h2>{{items.ItemName}}</h2>
+                                </ion-item>
+                            </div>
+                        </div>
+                    </ion-list>
+                </my-pane>
+            </div>
+        </my-tabs>
+        -->
+
+
+
         <!---
         <div class="sections" ng-repeat="section in sections">
             <h2>{{ section.SectionName}}</h2>
@@ -67,7 +95,7 @@
             
         </div>   
         ------->
-        
+
         </div>
         </div>
 
@@ -77,4 +105,3 @@
 
     </ion-content>
 </ion-view>
-
