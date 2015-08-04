@@ -16,72 +16,132 @@
         <h2>REVIEWS</h2>
 
 
-        <my-tabs>
-            <my-pane title="Review Order">
-                
+        <ion-scroll direction="x" class="wide-as-needed text-center reviewscrollTabs">
+            <a class="button inline-button" ng-click="slideGoto(0)"
+               ng-class="{active:myActiveSlide == 0}"><span>Review Items
+            </span></a>
+            <a class="button inline-button" ng-click="slideGoto(1)"
+               ng-class="{active:myActiveSlide == 1}"><span>Confirm Items
+            </span></a>
+        </ion-scroll>
+
+
+        <ion-slide-box active-slide="myActiveSlide" does-continue="false" on-slide-changed="slideHasChanged($index)">
+
+            <ion-slide>
+
+                <div class="box blue">
+
                     <div ng-if="(reviewItems.length == 0)"> There are no review items</div>
-                <ion-list>
-                    <div class="reviewOrders" ng-repeat="reviewItem in reviewItems">
-                        <ion-item class="item-stable" ng-click="toggleGroup(reviewItem)" ng-class="{active: isGroupShown(category)}">
-                            <i class="icon" ng-class="isGroupShown(reviewItem) ? 'ion-minus' : 'ion-plus'"></i> &nbsp; {{reviewItem.itemName}}
-                        </ion-item>
-                        <div class="items" ng-show="isGroupShown(reviewItem)">
-                            <ion-item class="item-accordion" ng-repeat="item in reviewItem.kotitems">
-
-                                <h2>{{item.firstName +' '+item.lastName +' '+item.quantity}}</h2>
+                    <ion-list>
+                        <div class="reviewOrders" ng-repeat="reviewItem in reviewItems">
+                            <ion-item class="item-stable" ng-click="toggleGroup(reviewItem)" ng-class="{active: isGroupShown(category)}">
+                                <i class="icon" ng-class="isGroupShown(reviewItem) ? 'ion-minus' : 'ion-plus'"></i> &nbsp; {{reviewItem.itemName}}
                             </ion-item>
-                        </div>
-                    </div>
-                </ion-list>
+                            <div class="items" ng-show="isGroupShown(reviewItem)">
+                                <ion-item class="item-accordion" ng-repeat="item in reviewItem.kotitems">
 
+                                    <h2>{{item.firstName +' '+item.lastName +' '+item.quantity}}</h2>
+                                </ion-item>
+                            </div>
+                        </div>
+                    </ion-list>
                 </div>
 
-            </my-pane>
+            </ion-slide>
 
-            <my-pane title="Confirm Order">
-                <ion-list>
-                    <div ng-if="(confirmedItems.length == 0)"> <br><br>There are no pending items to confirme<br><br></div>
-                    <div class="reviewOrders" ng-repeat="confirmItem in confirmedItems">
-                        <ion-item class="item-stable" ng-click="toggleGroup(confirmItem)" ng-class="{active: isGroupShown(confirmItem)}">
-                            <i class="icon" ng-class="isGroupShown(confirmItem) ? 'ion-minus' : 'ion-plus'"></i> &nbsp; {{confirmItem.itemName}}
-                        </ion-item>
-                        <div class="items" ng-show="isGroupShown(confirmItem)">
-                            <ion-item class="item-accordion" ng-repeat="item in confirmItem.kotitems">
-
-                                <h2>{{item.firstName +' '+item.lastName +' '+item.quantity}}</h2>
+            <ion-slide>
+                <div class="box blue">
+                    <ion-list>
+                        <div ng-if="(confirmedItems.length == 0)"> <br><br>There are no pending items to confirme<br><br></div>
+                        <div class="reviewOrders" ng-repeat="confirmItem in confirmedItems">
+                            <ion-item class="item-stable" ng-click="toggleGroup(confirmItem)" ng-class="{active: isGroupShown(confirmItem)}">
+                                <i class="icon" ng-class="isGroupShown(confirmItem) ? 'ion-minus' : 'ion-plus'"></i> &nbsp; {{confirmItem.itemName}}
                             </ion-item>
-                        </div>
-                    </div>
-                </ion-list>
+                            <div class="items" ng-show="isGroupShown(confirmItem)">
+                                <ion-item class="item-accordion" ng-repeat="item in confirmItem.kotitems">
 
-                
-                
-            </my-pane>
-        </my-tabs>
-<!-- 
-        <div class="sections" ng-repeat="confirmItem in confirmItems">
-            <my-pane title="{{ section.SectionName}}">
-                <ion-list>
-                    <div class="categories" ng-repeat="category in section.Categories">
-                        <ion-item class="item-stable" ng-click="toggleGroup(category)" ng-class="{active: isGroupShown(category)}">
-                            <i class="icon" ng-class="isGroupShown(category) ? 'ion-minus' : 'ion-plus'"></i> &nbsp; {{category.CategoryName}}
-                        </ion-item>
-                        <div class="items" ng-show="isGroupShown(category)">
-                            <ion-item class="item-accordion" ng-repeat="items in category.Items">
-
-                                <h2>{{items.ItemName}}</h2>
-                            </ion-item>
+                                    <h2>{{item.firstName +' '+item.lastName +' '+item.quantity}}</h2>
+                                </ion-item>
+                            </div>
                         </div>
-                    </div>
-                </ion-list>
-            </my-pane>
-        </div> --> 
+                    </ion-list>
+                </div>
+
+            </ion-slide>
+
+
+
+        </ion-slide-box>
+
+
+        <!--
+
+              <my-tabs>
+                  <my-pane title="Review Order">
+
+                      <ion-list>
+                          <div class="reviewOrders" ng-repeat="reviewItem in reviewItems">
+                              <ion-item class="item-stable" ng-click="toggleGroup(reviewItem)" ng-class="{active: isGroupShown(category)}">
+                                  <i class="icon" ng-class="isGroupShown(reviewItem) ? 'ion-minus' : 'ion-plus'"></i> &nbsp; {{reviewItem.itemName}}
+                              </ion-item>
+                              <div class="items" ng-show="isGroupShown(reviewItem)">
+                                  <ion-item class="item-accordion" ng-repeat="item in reviewItem.kotitems">
+
+                                      <h2>{{item.firstName +' '+item.lastName +' '+item.quantity}}</h2>
+                                  </ion-item>
+                              </div>
+                          </div>
+                      </ion-list>
+
+                      </div>
+
+                  </my-pane>
+
+                  <my-pane title="Confirm Order">
+                      <ion-list>
+                          <div ng-if="(confirmedItems.length == 0)"> <br><br>There are no pending items to confirme<br><br></div>
+                          <div class="reviewOrders" ng-repeat="confirmItem in confirmedItems">
+                              <ion-item class="item-stable" ng-click="toggleGroup(confirmItem)" ng-class="{active: isGroupShown(confirmItem)}">
+                                  <i class="icon" ng-class="isGroupShown(confirmItem) ? 'ion-minus' : 'ion-plus'"></i> &nbsp; {{confirmItem.itemName}}
+                              </ion-item>
+                              <div class="items" ng-show="isGroupShown(confirmItem)">
+                                  <ion-item class="item-accordion" ng-repeat="item in confirmItem.kotitems">
+
+                                      <h2>{{item.firstName +' '+item.lastName +' '+item.quantity}}</h2>
+                                  </ion-item>
+                              </div>
+                          </div>
+                      </ion-list>
+
+
+
+                  </my-pane>
+              </my-tabs>
+
+              <div class="sections" ng-repeat="confirmItem in confirmItems">
+                  <my-pane title="{{ section.SectionName}}">
+                      <ion-list>
+                          <div class="categories" ng-repeat="category in section.Categories">
+                              <ion-item class="item-stable" ng-click="toggleGroup(category)" ng-class="{active: isGroupShown(category)}">
+                                  <i class="icon" ng-class="isGroupShown(category) ? 'ion-minus' : 'ion-plus'"></i> &nbsp; {{category.CategoryName}}
+                              </ion-item>
+                              <div class="items" ng-show="isGroupShown(category)">
+                                  <ion-item class="item-accordion" ng-repeat="items in category.Items">
+
+                                      <h2>{{items.ItemName}}</h2>
+                                  </ion-item>
+                              </div>
+                          </div>
+                      </ion-list>
+                  </my-pane>
+              </div> -->
 
 
         <!--<p>{{ reviewResponce}}</p> -->
 
         <a class="button icon-left ion-chevron-left button-calm" href="#/gp/table">TABLE</a>
-        <a class="button icon-right ion-chevron-right button-calm" href="#/gp/menu">MENU</a>
+        <a class="button icon-right ion-chevron-right button-calm" href="#/gp/menu/1/1/1">MENU</a>
 
     </ion-content>
 </ion-view>

@@ -47,8 +47,7 @@ angular.module("GoodPhood.Controller", ['GoodPhood.appCtrl'])
 
         }
         $scope.slideHasChanged = function ($index) {
-            $scope.myActiveSlide = $index; 
-             
+               $scope.myActiveSlide = $index;
         };
 
 

@@ -40,7 +40,7 @@ angular.module('GoodPhood', ['ionic', "GoodPhood.Controller", "GoodPhood.Service
         }
     
     }).state('gp.menu', {
-        url : "/menu",
+        url : "/menu/:venueId/:tableId/:userId",
         views : {
             "viewContent" : {
                 templateUrl : "templates/menuPage.html",
@@ -49,6 +49,7 @@ angular.module('GoodPhood', ['ionic', "GoodPhood.Controller", "GoodPhood.Service
         }
     }).state('gp.review', {
         url : "/review",
+        cache:false,
         views : {
             "viewContent" : {
                 templateUrl : "templates/reviewPage.html",
