@@ -16,18 +16,13 @@ angular.module("GoodPhood.appCtrl", ['GoodPhood.Services', 'GoodPhood.directive'
            // alert("State Params page");
         });
         // IONIC VIEW STATUS
-        $scope.$on('$ionicView.enter', function() {
-            alert("view Entered");
-            $interval.cancel(orderSummeryInterval)
+        $scope.$on('$ionicView.enter', function() { 
         })
 
-        $scope.$on('$ionicView.leave', function() {
-            alert("view leave");
+        $scope.$on('$ionicView.leave', function() { 
             $interval.cancel(orderSummeryInterval)
         })
-        alert($stateParams.venueId);
-        alert($stateParams.tableId);
-        alert($stateParams.userId);
+        alert($stateParams.venueId+ " == "+$stateParams.tableId +" == "+$stateParams.userId);
         appService.gpService("create/"+$stateParams.venueId+"/"+$stateParams.tableId+"/"+$stateParams.userId, "GET", null).then(function (resp) {
              alert("menu Service")
             console.log(resp);
@@ -39,7 +34,36 @@ angular.module("GoodPhood.appCtrl", ['GoodPhood.Services', 'GoodPhood.directive'
            $ionicSlideBoxDelegate.update();
 
         });
-
+        var addItemOrder = function(orderId, userId, itemId, qty, kotItemId, preference, viewHandler, errorHandler){
+            var postData = { OrderId: orderId, UserId: userId, ItemId: itemId, Quantity: qty, 
+                            KOTItemId: kotItemId, Preferences: '' }; 
+            appService.gpService("addorupdate", "POST", postData).then(function(summery){
+                 alert("CLICK success");
+                viewHandler(summery);
+                 //$scope.orderSummeryCount = summery
+             }, function(){
+                errorHandler();
+            });
+        }
+    
+        $scope.menuMinusClick = function(itemId, kotItemVal){
+            var quantityItemVal = -1;
+            addItemOrder($scope.orderId, $scope.userId, itemIdVal, quantityItemVal, kotItemVal, "", function(summery){
+                
+            }, function(){
+            
+            });
+             
+        };
+    $scope.menuPlusClick = function(itemId, kotItemVal){
+            var quantityItemVal = 1;
+            addItemOrder($scope.orderId, $scope.userId, itemIdVal, quantityItemVal, kotItemVal, "", function(summery){
+                
+            }, function(){
+            
+            });
+             
+        };
          var orderSummeryInterval =  function(){
              appService.gpService("ordersummary/1/1", "GET", null).then(function(summery){
                 // alert("success");

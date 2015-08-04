@@ -27,8 +27,11 @@
                                     <i class="icon" ng-class="isGroupShown(category) ? 'ion-minus' : 'ion-plus'"></i> &nbsp; {{category.CategoryName}}
                                 </ion-item>
                                 <div class="items" ng-show="isGroupShown(category)">
-                                    <ion-item class="item-accordion" ng-repeat="items in category.Items">
-                                        <h2>{{items.ItemName}}</h2>
+                                    <ion-item class="item-accordion" ng-repeat="items in category.Items"><pre>{{items | json}}</pre>
+                                        
+                                        <h2>{{items.ItemName}} 
+                                            <a href="#" class="icon ion-minus-round" ng-click="menuMinusClick(items.itemId, '')"></a> | 
+                                            <a href="#" class="icon ion-plus-round" ng-click="menuPlusClick(items.itemId, '')"></a></h2>
                                     </ion-item>
                                 </div>
                             </div>
