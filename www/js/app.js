@@ -46,7 +46,8 @@ angular.module('GoodPhood', ['ionic', "GoodPhood.Controller", "GoodPhood.Service
         url : "/table",
         views : {
                "commonView" : {
-                    templateUrl : "templates/tablePage.html"
+                    templateUrl : "templates/tablePage.html",
+                    controller : "tableCtrl"
                 }         
             }
     })

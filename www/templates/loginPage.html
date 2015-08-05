@@ -11,9 +11,11 @@
     <ion-content>
       <!-- The content of the page -->
       <h1>Login Page</h1>
-        <pre>{{ message }}</pre>
-        <input type="text" ng-model="message" />
-  
+         
+  <input ng-model="user.userNumber" /> 
+        <pre>{{user | json}}</pre>
+        
+        <button ng-click="clickHandle(message)">Click here </button>
         
 <a class="button icon-right ion-chevron-right button-calm button-block " href="#/common/table">Table</a>
 <a class="button icon-right ion-chevron-right button-calm button-block " href="#/gp/menu/1/1/1">Menu</a>

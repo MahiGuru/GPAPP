@@ -11,7 +11,12 @@
     </ion-nav-bar>
     <ion-content>
         
-        <pre>{{ message }}</pre>
+        <pre>{{orderDetails | json}}</pre>
+        
+        <input type="text" ng-model="orderId" />
+        
+        
+        
         <ion-scroll direction="x" class="wide-as-needed text-center scrollTabs">
             <a class="button inline-button" ng-repeat="section in sections"  ng-click="slideGoto($index)"
                ng-class="{active:myActiveSlide == $index}"><span>{{section.SectionName}}</span></a>

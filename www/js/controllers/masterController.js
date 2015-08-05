@@ -52,7 +52,15 @@ angular.module("GoodPhood.Controller", ['GoodPhood.appCtrl'])
         $scope.slideHasChanged = function ($index) {
                $scope.myActiveSlide = $index;
         };
-
+        
+    
+        $scope.message = "asfasfasf";
+           
+            $scope.$watch('message', function(newValue){
+                console.log(newValue)
+                AccessScope.store('message', $scope.message);  
+            //Storing All Scopes into one service..
+            }, true)
 
 
 
