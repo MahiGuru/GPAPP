@@ -1,7 +1,10 @@
 angular.module("GoodPhood.Controller", ['GoodPhood.appCtrl'])
-    .controller('AppCtrl', function ($scope, $ionicSlideBoxDelegate) {
-
-        $scope.OrderId = "";
+    .controller('AppCtrl', function ($scope, $ionicSlideBoxDelegate, AccessScope) {
+        //Storing All Scopes into one service..
+        AccessScope.store('AppCtrl', $scope);
+        $scope.orderId = "";
+        $scope.tableId = "";
+        $scope.userId = 1;
         /********* Collapsible ************/
         $scope.toggleGroup = function (group) {
             if ($scope.isGroupShown(group)) {

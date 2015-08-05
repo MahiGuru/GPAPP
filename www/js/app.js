@@ -4,8 +4,9 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 angular.module('GoodPhood', ['ionic', "GoodPhood.Controller", "GoodPhood.Services", "GoodPhood.directive"])
+   
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $rootScope) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -16,30 +17,48 @@ angular.module('GoodPhood', ['ionic', "GoodPhood.Controller", "GoodPhood.Service
       StatusBar.styleDefault();
     }
   });
-}).config(function($stateProvider, $urlRouterProvider){
-    $stateProvider.state('gp', {
+  
+    $rootScope.$on('handleEmit', function(event, args) {
+        $rootScope.$broadcast('handleBroadcast', args);
+    }); 
+  
+}).config(function($stateProvider, $urlRouterProvider, $httpProvider){ 
+    
+    //$httpProvider.defaults.headers.post['Content-Type'] = 'application/json'; 
+    //$httpProvider.defaults.headers['Access-Control-Allow-Headers'] = '*'; 
+    
+    $stateProvider.state('common', {
+        url : "/common",
+        abstract : false,
+        templateUrl : "templates/masterPageCommon.html",
+        controller : "AppCtrl"
+    })
+    .state('common.login', {
+        url : "/login",
+        views : {
+            "commonView" : {
+                templateUrl : "templates/loginPage.html",
+                controller : "loginCtrl"   
+             }    
+        }    
+    })
+    .state('common.table', {
+        url : "/table",
+        views : {
+               "commonView" : {
+                    templateUrl : "templates/tablePage.html"
+                }         
+            }
+    })
+    .state('gp', {
         url : "/gp",
         abstract : true,
         templateUrl : "templates/masterPage.html",
         controller : "AppCtrl"
         
-    }).state('gp.login', {
-        url : "/login",
-        views : {
-            "viewContent" : {
-                templateUrl : "templates/loginPage.html",
-                controller : "loginCtrl"
-            }
-        }
-    }).state('gp.table', {
-        url : "/table",
-        views : {
-            "viewContent" : {
-                templateUrl : "templates/tablePage.html" 
-            }
-        }
+    })
     
-    }).state('gp.menu', {
+    .state('gp.menu', {
         url : "/menu/:venueId/:tableId/:userId",
         views : {
             "viewContent" : {
@@ -48,8 +67,7 @@ angular.module('GoodPhood', ['ionic', "GoodPhood.Controller", "GoodPhood.Service
             }
         }
     }).state('gp.review', {
-        url : "/review",
-        cache:false,
+        url : "/review/:orderId",
         views : {
             "viewContent" : {
                 templateUrl : "templates/reviewPage.html",
@@ -67,5 +85,5 @@ angular.module('GoodPhood', ['ionic', "GoodPhood.Controller", "GoodPhood.Service
     
     
     
-    $urlRouterProvider.otherwise("/gp/login");
+    $urlRouterProvider.otherwise("/common/login");
 });

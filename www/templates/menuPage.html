@@ -10,7 +10,8 @@
 
     </ion-nav-bar>
     <ion-content>
-
+        
+        <pre>{{ message }}</pre>
         <ion-scroll direction="x" class="wide-as-needed text-center scrollTabs">
             <a class="button inline-button" ng-repeat="section in sections"  ng-click="slideGoto($index)"
                ng-class="{active:myActiveSlide == $index}"><span>{{section.SectionName}}</span></a>
@@ -30,8 +31,8 @@
                                     <ion-item class="item-accordion" ng-repeat="items in category.Items"><pre>{{items | json}}</pre>
                                         
                                         <h2>{{items.ItemName}} 
-                                            <a href="#" class="icon ion-minus-round" ng-click="menuMinusClick(items.itemId, '')"></a> | 
-                                            <a href="#" class="icon ion-plus-round" ng-click="menuPlusClick(items.itemId, '')"></a></h2>
+                                            <a class="icon ion-minus-round" ng-click="menuMinusClick(items.ItemId, '')"></a> | 
+                                            <a class="icon ion-plus-round" ng-click="menuPlusClick(items.ItemId, '')"></a></h2>
                                     </ion-item>
                                 </div>
                             </div>
@@ -53,8 +54,8 @@
             </div>
         </ion-footer-bar>
 
-        <a class="button icon-left ion-chevron-left button-calm" href="#/gp/table">TABLE</a>
-        <a class="button icon-right ion-chevron-right button-calm" href="#/gp/review">REVIEWS</a>
+        <a class="button icon-left ion-chevron-left button-calm" href="#/common/table">TABLE</a>
+        <a class="button icon-right ion-chevron-right button-calm" href="#/gp/review/{{orderId}}">REVIEWS</a>
 
     </ion-content>
 </ion-view>
