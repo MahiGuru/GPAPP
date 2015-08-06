@@ -1,50 +1,38 @@
 angular.module("GoodPhood.directive", [])
+
+.filter('appendAsh', function(){
+  return function(input, char){
+    if(isNaN(input)){
+        console.log(input);
+      return input.replace(/[0-9]/g, input+"#");
+    } else {
+      return input;
+    }
+  }
+})
+
 .directive('myTabs', function () {
-        return {
-            restrict: 'E',
-            transclude: true,
-            scope: {},
-            controller: "AppCtrl",/*function ($scope, $ionicSlideBoxDelegate) {
-                var panes = $scope.panes = [];
-                $scope.select = function (pane) {
-                    angular.forEach(panes, function (pane) {
-                        pane.selected = false;
-                    });
+    return {
+        restrict: 'E',
+        transclude: true,
+        scope: {},
+        controller: "AppCtrl",
+        templateUrl: 'js/directives/tabs.html'
 
-                    pane.selected = true;
-                };
-
-                this.addPane = function (pane) {
-                    if (panes.length === 0) {
-                        $scope.select(pane);
-                    }
-                    panes.push(pane);
-                };
-
-                $scope.slideGoto = function (index) {
-                     
-                    $ionicSlideBoxDelegate.slide(index, 500);
-                     
-                    
-                }
-                console.log($scope);
-            },*/
-            templateUrl: 'js/directives/tabs.html'
-
-        };
-    })
-    .directive('myPane', function () {
-        return {
-            require: '^myTabs',
-            restrict: 'E',
-            transclude: true,
-            scope: {
-                title: '@'
-            },
-            link: function (scope, element, attrs, tCtrl) {
-                console.log(tCtrl);
-                tCtrl.addPane(scope);
-            },
-            template: '<div class="tab-pane" ng-show="selected" ng-transclude></div>'
-        };
-    });
+    };
+})
+.directive('myPane', function () {
+    return {
+        require: '^myTabs',
+        restrict: 'E',
+        transclude: true,
+        scope: {
+            title: '@'
+        },
+        link: function (scope, element, attrs, tCtrl) {
+            console.log(tCtrl);
+            tCtrl.addPane(scope);
+        },
+        template: '<div class="tab-pane" ng-show="selected" ng-transclude></div>'
+    };
+});

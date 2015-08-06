@@ -26,8 +26,10 @@
        };
        //SETTING AND GETTING TABLE RELATED VALUES **** WATCHING ******
        $scope.$watch('tableDetails.qrNumber', function (newValue, oldValue) {
-           console.log(newValue);
-
+           console.log(newValue.charAt(0));
+            if(newValue.length == 1) {
+                $scope.tableDetails.qrNumber = newValue.replace(/^[0-9]/g, newValue+"#");    
+            }
            if (newValue.length == 3 && newValue.indexOf("#") >= -1) { 
                $scope.tableDetails.orderNumber = newValue.charAt(0);
                $scope.tableDetails.tableNumber = newValue.charAt(2);
@@ -46,24 +48,26 @@
        $scope.venueMenu = '';
        $scope.orderSummeryCount = "";
 
-       //ON STATE CHANGE SUCCESS CALL BELOW METHOD
-       /*$scope.$on("$stateChangeSuccess", function updatePage() {
-           alert("from Menu Controller");
-           $scope.page = $state.params.slug;
-       });*/
+       /**** 
+            TEMPORARY 
+       ****/
+       $scope.orderInfo = {
+           qrNumber: "",
+           orderNumber: "1",
+           tableNumber: "1",
+           userNumber : "1"
+       };
+       
+       /**** 
+            /TEMPORARY 
+       ****/
+       
+       //$scope.orderInfo = AccessScope.get('tableDetails');
+       
+       console.log($scope.orderInfo);
 
-       $scope.orderId = "";
-       $scope.tableId = "";
-       $scope.userId = "";
-
-       /*$scope.$on('handleBroadcast', function(event, args) {
-           $scope.message = 'MENU: ' + args.message;
-       });*/
-
-       $scope.orderDetails = AccessScope.get('orderDetails');
-       console.log($scope.orderDetails);
-
-       $scope.$watch('orderId', function (newValue) {
+       $scope.$watch('orderInfo', function (newValue) {
+           console.log(" ------ orderinfo ------- ");
            console.log(newValue)
                //AccessScope.store('orderId', newValue);   
        })
@@ -72,14 +76,15 @@
            // alert("State Params page");
        });
        // IONIC VIEW STATUS
-       $scope.$on('$ionicView.enter', function () { /* TODO :  loading view time do your logic */ });
-
-       alert($stateParams.venueId + " == " + $stateParams.tableId + " == " + $stateParams.userId);
-       if ($scope.orderId == "") $scope.orderId = parseInt($stateParams.venueId, 10);
-       if ($scope.tableId == "") $scope.tableId = parseInt($stateParams.tableId, 10);
-       if ($scope.userId == "") $scope.userId = parseInt($stateParams.userId, 10);
+       $scope.$on('$ionicView.enter', function () { /* TODO :  loading view time do your logic */ }); 
+       
+       if($scope.orderInfo != undefined){
+            $scope.menuPath = "create/"+$scope.orderInfo.orderNumber+"/"+$scope.orderInfo.tableNumber+"/"+$scope.orderInfo.userNumber;
+            console.log($scope.menuPath);
+        }
+       
        //--------------------- MENU SERVICE--------------------
-       appService.get("create/" + $stateParams.venueId + "/" + $stateParams.tableId + "/" + $stateParams.userId, null).then(function (resp) {
+       appService.get($scope.menuPath, null).then(function (resp) {
            alert("menu Service")
            console.log(resp);
            $scope.venueMenu = resp.menu.Sections;
