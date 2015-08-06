@@ -2,18 +2,18 @@
    appControllers.controller('loginCtrl', function ($scope, AccessScope) {
        $scope.user = {
            mobileNumber: "",
-           deviceNumber : "",
+           deviceNumber: "",
            firstName: "",
            lastName: "",
-           email: "", 
+           email: "",
            userNumber: ''
-       };  
-       
+       };
+
        //SETTING AND GETTING USER VALUE **** WATCHING ******
        $scope.$watch('user.userNumber', function (newValue, oldValue) {
-           console.log(newValue); 
+           console.log(newValue);
            AccessScope.store('userNumber', newValue);
-           console.log("From Access Scope = "+AccessScope.get('userNumber'));
+           console.log("From Access Scope = " + AccessScope.get('userNumber'));
        }, true);
 
    });
@@ -22,19 +22,19 @@
            qrNumber: "",
            orderNumber: "",
            tableNumber: "",
-           userNumber : ""
+           userNumber: ""
        };
        //SETTING AND GETTING TABLE RELATED VALUES **** WATCHING ******
        $scope.$watch('tableDetails.qrNumber', function (newValue, oldValue) {
            console.log(newValue.charAt(0));
-            if(newValue.length == 1) {
-                $scope.tableDetails.qrNumber = newValue.replace(/^[0-9]/g, newValue+"#");    
-            }
-           if (newValue.length == 3 && newValue.indexOf("#") >= -1) { 
+           if (newValue.length == 1) {
+               $scope.tableDetails.qrNumber = newValue.replace(/^[0-9]/g, newValue + "#");
+           }
+           if (newValue.length == 3 && newValue.indexOf("#") >= -1) {
                $scope.tableDetails.orderNumber = newValue.charAt(0);
                $scope.tableDetails.tableNumber = newValue.charAt(2);
-               $scope.tableDetails.userNumber = AccessScope.get('userNumber') ||  1;
-               
+               $scope.tableDetails.userNumber = AccessScope.get('userNumber') || 1;
+
                AccessScope.store('tableDetails', $scope.tableDetails);
                console.log(AccessScope.get('tableDetails'));
            }
@@ -55,15 +55,15 @@
            qrNumber: "",
            orderNumber: "1",
            tableNumber: "1",
-           userNumber : "1"
+           userNumber: "1"
        };
-       
+
        /**** 
             /TEMPORARY 
        ****/
-       
+
        //$scope.orderInfo = AccessScope.get('tableDetails');
-       
+
        console.log($scope.orderInfo);
 
        $scope.$watch('orderInfo', function (newValue) {
@@ -76,13 +76,19 @@
            // alert("State Params page");
        });
        // IONIC VIEW STATUS
-       $scope.$on('$ionicView.enter', function () { /* TODO :  loading view time do your logic */ }); 
+       $scope.$on('$ionicView.enter', function () { /* TODO :  loading view time do your logic */ });
+
+       appService.gpService("vieworder/" + $scope.orderInfo.orderNumber, "GET", null).then(function (viewOrderResponce) {
+           $scope.ordersResponce = viewOrderResponce;
+           $scope.reviewItems = viewOrderResponce.reviewItems;
+           $scope.confirmedItems = viewOrderResponce.confirmedItems;
+       })
        
-       if($scope.orderInfo != undefined){
-            $scope.menuPath = "create/"+$scope.orderInfo.orderNumber+"/"+$scope.orderInfo.tableNumber+"/"+$scope.orderInfo.userNumber;
-            console.log($scope.menuPath);
-        }
-       
+       if ($scope.orderInfo != undefined) {
+           $scope.menuPath = "create/" + $scope.orderInfo.orderNumber + "/" + $scope.orderInfo.tableNumber + "/" + $scope.orderInfo.userNumber;
+           console.log($scope.menuPath);
+       }
+
        //--------------------- MENU SERVICE--------------------
        appService.get($scope.menuPath, null).then(function (resp) {
            alert("menu Service")
@@ -103,6 +109,30 @@
                $scope.sections = newValue;
 
            }
+       });
+
+       $scope.$watch("ordersResponce", function(newValue, oldValue){
+           
+            
+       }, true);
+       $scope.$watch("sections", function (newValue, oldValue) { 
+           //$scope.ordersResponce 
+           angular.forEach($scope.reviewItems, function(value, key) {
+              console.log(key + ' Review : -------- ' + value);
+            });
+           
+           angular.forEach($scope.confirmedItems, function(value, key) {
+              console.log(key + ' Confirm : -------- ' + value);
+            });
+           $($scope.sections).each(function (i, section) {  
+               $(section.Categories).each(function (k, category) { 
+                   $(category.Items).each(function (m, item) {
+                       $scope.sections[i].Categories[k].Items[m]["ItemCount"] = 0;
+                       console.log($scope.sections[i].Categories[k].Items[m]);
+                   });
+               });
+           });
+
        });
 
        //---------------- ADD ITEM SERVICE-----------------

@@ -33,10 +33,12 @@
                                     <i class="icon" ng-class="isGroupShown(category) ? 'ion-minus' : 'ion-plus'"></i> &nbsp; {{category.CategoryName}}
                                 </ion-item>
                                 <div class="items" ng-show="isGroupShown(category)">
-                                    <ion-item class="item-accordion" ng-repeat="items in category.Items"><pre>{{items | json}}</pre>
+                                    <ion-item class="item-accordion" ng-repeat="items in category.Items">
+                                        <!--<pre>{{items | json}}</pre>-->
                                         
-                                        <h2>{{items.ItemName}} 
-                                            <a class="icon ion-minus-round" ng-click="menuMinusClick(items.ItemId, '')"></a> | 
+                                        <h2>{{items.ItemName}}  <br><br>
+                                            <span ng-if="(items.IsCustomizable == 1)" ng-click="customizeLink(items.ItemId, items.ItemName)"> Customize </span>
+                                            <a class="icon ion-minus-round" ng-click="menuMinusClick(items.ItemId, '')"></a> {{items.ItemCount }}  
                                             <a class="icon ion-plus-round" ng-click="menuPlusClick(items.ItemId, '')"></a></h2>
                                     </ion-item>
                                 </div>
@@ -48,7 +50,7 @@
              
 
         </ion-slide-box>
-        <ion-footer-bar align-title="left" class="bar-assertive" ng-click="orderSummeryClick(orderSummery.ReviewItemCount)">
+        <ion-footer-bar align-title="left" class="bar-assertive" ng-if="(reviewItems.length ==0 || confirmedItems.length ==0)" ng-click="orderSummeryClick(orderSummery.ReviewItemCount)">
             <div class="buttons">
                 <button class="button">Left Button</button>
             </div>
