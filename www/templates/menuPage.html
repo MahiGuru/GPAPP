@@ -26,6 +26,13 @@
         <ion-slide-box active-slide="myActiveSlide" does-continue="false" on-slide-changed="slideHasChanged($index)">
             
             <ion-slide ng-repeat="section in sections"> 
+                
+              
+    <button class="button button-dark" ng-click="openModal()">
+      OPEN MODAL
+    </button>
+                
+                
                 <div class="box blue"> 
                         <ion-list>
                             <div class="categories" ng-repeat="category in section.Categories">
@@ -38,8 +45,9 @@
                                         
                                         <h2>{{items.ItemName}}  <br><br>
                                             <span ng-if="(items.IsCustomizable == 1)" ng-click="customizeLink(items.ItemId, items.ItemName)"> Customize </span>
-                                            <a class="icon ion-minus-round" ng-click="menuMinusClick(items.ItemId, '')"></a> {{items.ItemCount }}  
-                                            <a class="icon ion-plus-round" ng-click="menuPlusClick(items.ItemId, '')"></a></h2>
+                                            <a class="icon ion-minus-round" ng-click="menuMinusClick(items.ItemId, items)"></a> 
+                                             <span ng-init="items.ItemCount = 0">{{items.reviewCount + items.confirmCount + items.ItemCount }}  </span>
+                                            <a class="icon ion-plus-round" ng-click="menuPlusClick(items.ItemId, items)"></a></h2>
                                     </ion-item>
                                 </div>
                             </div>
@@ -50,7 +58,7 @@
              
 
         </ion-slide-box>
-        <ion-footer-bar align-title="left" class="bar-assertive" ng-if="(reviewItems.length ==0 || confirmedItems.length ==0)" ng-click="orderSummeryClick(orderSummery.ReviewItemCount)">
+        <ion-footer-bar align-title="left" class="bar-assertive" ng-if="(itemsReview.reviewItems.length ==0 || itemsReview.confirmedItems.length ==0)" ng-click="orderSummeryClick(orderSummery.ReviewItemCount)">
             <div class="buttons">
                 <button class="button">Left Button</button>
             </div>

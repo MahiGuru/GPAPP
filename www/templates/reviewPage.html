@@ -40,9 +40,14 @@
                                 <i class="icon" ng-class="isGroupShown(reviewItem) ? 'ion-minus' : 'ion-plus'"></i> &nbsp; {{reviewItem.itemName}}
                             </ion-item>
                             <div class="items" ng-show="isGroupShown(reviewItem)">
-                                <ion-item class="item-accordion" ng-repeat="item in reviewItem.kotitems">
-
-                                    <h2>{{item.firstName +' '+item.lastName +' '+item.quantity}}</h2>
+                                <ion-item class="item-accordion" ng-repeat="item in reviewItem.kotitems"> 
+                                    <h2>{{item.firstName +' '+item.lastName}}
+                                    <a class="icon ion-minus-round" ng-click="menuMinusClick(reviewItem.itemId, reviewItem)"></a> 
+                                        <span ng-init="reviewItem.reviewCount = item.quantity">
+                                            {{reviewItem.reviewCount + reviewItem.confirmCount }}
+                                        </span>
+                                        <a class="icon ion-plus-round" ng-click="menuPlusClick(reviewItem.itemId, reviewItem)"></a> 
+                                    </h2>
                                 </ion-item>
                             </div>
                         </div>

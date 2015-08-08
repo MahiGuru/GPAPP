@@ -69,6 +69,7 @@ angular.module('GoodPhood', ['ionic', "GoodPhood.Controller", "GoodPhood.Service
         }
     }).state('gp.review', {
         url : "/review/:orderId",
+        cache:false,
         views : {
             "viewContent" : {
                 templateUrl : "templates/reviewPage.html",
