@@ -77,15 +77,22 @@ angular.module('GoodPhood', ['ionic', "GoodPhood.Controller", "GoodPhood.Service
             }
         }
     }).state('gp.invoice', {
-        url : "/invoice",
+        url : "/invoice/:orderId",
         views : {
             "viewContent" : {
-                templateUrl : "templates/invoicePage.html"
+                templateUrl : "templates/invoicePage.html",
+                controller : "invoiceCtrl" 
             }
         }
-    });
-    
-    
+    }).state('gp.feedback', {
+        url : "/feedback/:orderId/:userId",
+        views : {
+            "viewContent" : {
+                templateUrl : "templates/feedbackPage.html",
+                controller : "feedbackCtrl" 
+            }
+        }
+    }); 
     
     $urlRouterProvider.otherwise("/common/login");
 });

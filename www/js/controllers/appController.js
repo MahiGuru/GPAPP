@@ -108,8 +108,7 @@
        };
 
        AccessScope.store('tableDetails', $scope.tableDetails);
-
-       console.log($scope.tableDetails);
+        $scope.orderInfo = AccessScope.get('tableDetails');
 
        /**** 
             ////////TEMPORARY 
@@ -126,8 +125,8 @@
 
        $scope.venueMenu = '';
 
-       if ($scope.tableDetails != undefined) {
-           $scope.menuPath = "create/" + $scope.tableDetails.orderNumber + "/" + $scope.tableDetails.tableNumber + "/" + $scope.tableDetails.userNumber;
+       if ($scope.orderInfo != undefined) {
+           $scope.menuPath = "create/" + $scope.orderInfo.orderNumber + "/" + $scope.orderInfo.tableNumber + "/" + $scope.orderInfo.userNumber;
        }
 
        appService.get($scope.menuPath, null).then(function (resp) {
@@ -186,14 +185,34 @@
        /* ------------------------- /////ORDER SUMMERY SERVICE --------------- ---------- */
 
        /* ------------------------- CUSTOMIZE PANEL----------------------------------- */
-       $scope.customizeLink = function (itemId, itemName) {
-
+       $scope.customizeLink = function (item) { 
+           $scope.modelItem = item; 
+            appService.get("getpreferences/"+$scope.orderInfo.orderNumber+"/"+item.ItemId+"/"+$scope.orderInfo.orderNumber, null).then(function (customiseData) {
+                alert("success");
+                console.log(customiseData);
+               $scope.customizeData = customiseData;
+           });
+           
+           
+           console.log("customize link");
+           $scope.modal.show();
        }
-
+       $scope.savePreference = function(){
+            alert("save prefernce");
+           /*
+           var postData = { orderId: $scope.orderInfo.orderNumber, itemId: modelItem.ItemId, userId: $scope.orderInfo.orderNumber, options: options };
+           appService.post("savepreferences", postData)
+           .then(function (customiseData) {
+                alert("success");
+                console.log(customiseData);
+               $scope.customizeData = customiseData;
+           });
+           */
+       };
        $ionicModal.fromTemplateUrl('templates/customizePage.html', {
            scope: $scope,
            animation: 'slide-in-up'
-       }).then(function (modal) {
+       }).then(function (modal) { 
            $scope.modal = modal;
        });
        $scope.openModal = function () {
@@ -300,3 +319,85 @@
 
 
    });
+    
+   /************** INVOICE CTRL  **************/
+   appControllers.controller('invoiceCtrl', function ($scope, appService, $stateParams, AccessScope) { 
+
+       $scope.$on('$ionicView.enter', function () {
+
+           /**** 
+                TEMPORARY 
+           ****/
+           $scope.tableDetails = {
+               qrNumber: "",
+               orderNumber: "1",
+               tableNumber: "1",
+               userNumber: "1"
+           };
+
+           AccessScope.store('tableDetails', $scope.tableDetails);
+           
+           $scope.orderInfo = AccessScope.get('tableDetails');
+           
+           /**** 
+                /TEMPORARY 
+           ****/ 
+           
+           /* TODO :  loading view time do your logic */
+           appService.get("getinvoice/" + $stateParams.orderId, "GET", null).then(function (invoiceResponce) {
+               alert(invoiceResponce);
+               $scope.invoiceResponce = invoiceResponce;
+           })
+ 
+ 
+           $scope.$watch("invoiceResponce", function (newValue, oldValue) {   
+               $scope.invoiceDetails = newValue;
+           });
+
+       });
+
+
+   });
+    
+ 
+   /************** FEEDBACK CTRL  **************/
+   appControllers.controller('feedbackCtrl', function ($scope, appService, $stateParams, AccessScope) { 
+
+       $scope.$on('$ionicView.enter', function () {
+
+           /**** 
+                TEMPORARY 
+           ****/
+           $scope.tableDetails = {
+               qrNumber: "",
+               orderNumber: "1",
+               tableNumber: "1",
+               userNumber: "1"
+           };
+
+           AccessScope.store('tableDetails', $scope.tableDetails);
+           
+           $scope.orderInfo = AccessScope.get('tableDetails');
+           
+           /**** 
+                /TEMPORARY 
+           ****/ 
+           
+           /* TODO :  loading view time do your logic */
+           appService.get("getfeedback/" + $stateParams.orderId+"/"+$stateParams.userId, "GET", null).then(function (feedbackResponce) {
+               alert(feedbackResponce);
+               $scope.feedbackResponce = feedbackResponce;
+           })
+ 
+ 
+           $scope.$watch("feedbackResponce", function (newValue, oldValue) {   
+               $scope.feedbackDetails = newValue;
+           });
+
+       });
+
+
+   });
+
+    
+

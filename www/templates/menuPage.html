@@ -25,14 +25,10 @@
         
         <ion-slide-box active-slide="myActiveSlide" does-continue="false" on-slide-changed="slideHasChanged($index)">
             
-            <ion-slide ng-repeat="section in sections"> 
-                
-              
-    <button class="button button-dark" ng-click="openModal()">
-      OPEN MODAL
-    </button>
-                
-                
+            <ion-slide ng-repeat="section in sections">  
+                <!--<button class="button button-dark" ng-click="openModal()">
+                  OPEN MODAL
+                </button> --> 
                 <div class="box blue"> 
                         <ion-list>
                             <div class="categories" ng-repeat="category in section.Categories">
@@ -44,7 +40,7 @@
                                         <!--<pre>{{items | json}}</pre>-->
                                         
                                         <h2>{{items.ItemName}}  <br><br>
-                                            <span ng-if="(items.IsCustomizable == 1)" ng-click="customizeLink(items.ItemId, items.ItemName)"> Customize </span>
+                                            <span ng-if="(items.IsCustomizable == 1)" ng-click="customizeLink(items)"> Customize </span>
                                             <a class="icon ion-minus-round" ng-click="menuMinusClick(items.ItemId, items)"></a> 
                                              <span ng-init="items.ItemCount = 0">{{items.reviewCount + items.confirmCount + items.ItemCount }}  </span>
                                             <a class="icon ion-plus-round" ng-click="menuPlusClick(items.ItemId, items)"></a></h2>
