@@ -1,57 +1,55 @@
 <ion-view view-title="MENU">
-    <ion-nav-bar class="bar-stable">
+     
 
-        <!--<ion-nav-buttons side="left">
-          <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
-          </button>
-        </ion-nav-buttons> -->
-        <ion-nav-back-button>
-        </ion-nav-back-button>
-
-    </ion-nav-bar>
+    <ion-header-bar align-title="left" class="bar-positive">  
+        <h1 class="title"> MENU</h1>
+        <div class="buttons"> 
+            <button class="button icon ion-search"></button> &nbsp;&nbsp;
+            <button class="button icon ion-funnel"  ng-click="showPopup()"></button>
+        </div>
+    </ion-header-bar>
     <ion-content>
-        
-        <pre>{{orderDetails | json}}</pre>
-        
-        <input type="text" ng-model="orderId" />
-        
-        
-        
-        <ion-scroll direction="x" class="wide-as-needed text-center scrollTabs">
-            <a class="button inline-button" ng-repeat="section in sections"  ng-click="slideGoto($index)"
-               ng-class="{active:myActiveSlide == $index}"><span>{{section.SectionName}}</span></a>
-        </ion-scroll>
 
-        
+        <pre>{{orderDetails | json}}</pre>
+
+        <input type="text" ng-model="orderId" />
+
+
+
+        <ion-scroll direction="x" class="wide-as-needed text-center scrollTabs">
+            <a class="button inline-button" ng-repeat="section in sections" ng-click="slideGoto($index)" ng-class="{active:myActiveSlide == $index}"><span>{{section.SectionName}}</span></a>
+        </ion-scroll>
+ 
+
         <ion-slide-box active-slide="myActiveSlide" does-continue="false" on-slide-changed="slideHasChanged($index)">
-            
-            <ion-slide ng-repeat="section in sections">  
+
+            <ion-slide ng-repeat="section in sections">
                 <!--<button class="button button-dark" ng-click="openModal()">
                   OPEN MODAL
-                </button> --> 
-                <div class="box blue"> 
-                        <ion-list>
-                            <div class="categories" ng-repeat="category in section.Categories">
-                                <ion-item class="item-stable" ng-click="toggleGroup(category)" ng-class="{active: isGroupShown(category)}">
-                                    <i class="icon" ng-class="isGroupShown(category) ? 'ion-minus' : 'ion-plus'"></i> &nbsp; {{category.CategoryName}}
-                                </ion-item>
-                                <div class="items" ng-show="isGroupShown(category)">
-                                    <ion-item class="item-accordion" ng-repeat="items in category.Items">
-                                        <!--<pre>{{items | json}}</pre>-->
-                                        
-                                        <h2>{{items.ItemName}}  <br><br>
+                </button> -->
+                <div class="box blue">
+                    <ion-list>
+                        <div class="categories" ng-repeat="category in section.Categories">
+                            <ion-item class="item-stable" ng-click="toggleGroup(category)" ng-class="{active: isGroupShown(category)}">
+                                <i class="icon" ng-class="isGroupShown(category) ? 'ion-minus' : 'ion-plus'"></i> &nbsp; {{category.CategoryName}}
+                            </ion-item>
+                            <div class="items" ng-show="isGroupShown(category)">
+                                <ion-item class="item-accordion" ng-repeat="items in category.Items | filter: $root.filteredItems">
+                                    <!--<pre>{{items | json}}</pre>-->
+
+                                    <h2>{{items.ItemName}}  <br><br>
                                             <span ng-if="(items.IsCustomizable == 1)" ng-click="customizeLink(items)"> Customize </span>
                                             <a class="icon ion-minus-round" ng-click="menuMinusClick(items.ItemId, items)"></a> 
                                              <span ng-init="items.ItemCount = 0">{{items.reviewCount + items.confirmCount + items.ItemCount }}  </span>
                                             <a class="icon ion-plus-round" ng-click="menuPlusClick(items.ItemId, items)"></a></h2>
-                                    </ion-item>
-                                </div>
+                                </ion-item>
                             </div>
-                        </ion-list>
+                        </div>
+                    </ion-list>
                 </div>
-                     
+
             </ion-slide>
-             
+
 
         </ion-slide-box>
         <ion-footer-bar align-title="left" class="bar-assertive" ng-if="(itemsReview.reviewItems.length ==0 || itemsReview.confirmedItems.length ==0)" ng-click="orderSummeryClick(orderSummery.ReviewItemCount)">

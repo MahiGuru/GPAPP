@@ -53,6 +53,8 @@
                         </div>
                     </ion-list>
                 </div>
+                
+                <a ng-show="(reviewItems.length > 0)" class="button icon-left ion-chevron-left button-calm" ng-click="placeOrder()">Place Order</a>
 
             </ion-slide>
 
@@ -73,14 +75,13 @@
                         </div>
                     </ion-list>
                 </div>
-
+                <a ng-show="(confirmedItems.length > 0)" class="button icon-right ion-chevron-right button-calm" href="#/gp/invoice/1">CHECK OUT</a>
             </ion-slide>
 
 
 
         </ion-slide-box> 
 
-        <a class="button icon-left ion-chevron-left button-calm" href="#/common/table">TABLE</a>
         <a class="button icon-right ion-chevron-right button-calm" href="#/gp/invoice/1">INVOICE PAGE</a>
 
     </ion-content>

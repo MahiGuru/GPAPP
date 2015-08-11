@@ -15,6 +15,9 @@
            AccessScope.store('userNumber', newValue);
            console.log("From Access Scope = " + AccessScope.get('userNumber'));
        }, true);
+       $scope.loginFirstBtnClick = function(){
+            $scope.nextDivClick = true;
+       }
 
    });
    appControllers.controller('tableCtrl', function ($scope, AccessScope) {
@@ -108,7 +111,7 @@
        };
 
        AccessScope.store('tableDetails', $scope.tableDetails);
-        $scope.orderInfo = AccessScope.get('tableDetails');
+       $scope.orderInfo = AccessScope.get('tableDetails');
 
        /**** 
             ////////TEMPORARY 
@@ -185,20 +188,20 @@
        /* ------------------------- /////ORDER SUMMERY SERVICE --------------- ---------- */
 
        /* ------------------------- CUSTOMIZE PANEL----------------------------------- */
-       $scope.customizeLink = function (item) { 
-           $scope.modelItem = item; 
-            appService.get("getpreferences/"+$scope.orderInfo.orderNumber+"/"+item.ItemId+"/"+$scope.orderInfo.orderNumber, null).then(function (customiseData) {
-                alert("success");
-                console.log(customiseData);
+       $scope.customizeLink = function (item) {
+           $scope.modelItem = item;
+           appService.get("getpreferences/" + $scope.orderInfo.orderNumber + "/" + item.ItemId + "/" + $scope.orderInfo.orderNumber, null).then(function (customiseData) {
+               alert("success");
+               console.log(customiseData);
                $scope.customizeData = customiseData;
            });
-           
-           
+
+
            console.log("customize link");
            $scope.modal.show();
        }
-       $scope.savePreference = function(){
-            alert("save prefernce");
+       $scope.savePreference = function () {
+           alert("save prefernce");
            /*
            var postData = { orderId: $scope.orderInfo.orderNumber, itemId: modelItem.ItemId, userId: $scope.orderInfo.orderNumber, options: options };
            appService.post("savepreferences", postData)
@@ -212,7 +215,7 @@
        $ionicModal.fromTemplateUrl('templates/customizePage.html', {
            scope: $scope,
            animation: 'slide-in-up'
-       }).then(function (modal) { 
+       }).then(function (modal) {
            $scope.modal = modal;
        });
        $scope.openModal = function () {
@@ -232,30 +235,40 @@
               show
             </button>
        */
-
+       $scope.filterList = [
+           {
+               text: "Vegeterian",
+               checked: true
+           },
+           {
+               text: "Non Vegeterian",
+               checked: false
+           },
+           {
+               text: "Eggeterian",
+               checked: false
+           }
+           ];
+       $scope.filteredItems = [];
        $scope.showPopup = function () {
            $scope.data = {}
 
            // An elaborate, custom popup
            var myPopup = $ionicPopup.show({
-               template: '<input type="password" ng-model="data.wifi">',
-               title: 'Enter Wi-Fi Password',
-               subTitle: 'Please use normal things',
+               templateUrl: 'templates/filterPage.html',
+               title: 'Filter',
+               subTitle: 'Choose type of items',
                scope: $scope,
-               buttons: [
+               buttons: [ 
                    {
-                       text: 'Cancel'
-                   },
-                   {
-                       text: '<b>Save</b>',
+                       text: '<b>OK</b>',
                        type: 'button-positive',
                        onTap: function (e) {
-                           if (!$scope.data.wifi) {
-                               //don't allow the user to close unless he enters wifi password
-                               e.preventDefault();
-                           } else {
-                               return $scope.data.wifi;
-                           }
+                             angular.forEach($scope.filterList, function(value){
+                                if(value.checked == true){
+                                    $scope.filteredItems.push(value);
+                                }
+                             })
                        }
                },
              ]
@@ -270,7 +283,28 @@
 
 
        /* -------------------------- /////POPUPS ---------------------------------- */
-        $scope.$on('$ionicView.leave', function () {
+
+       /* ---------------------------  FILTER --------------------------------*/
+
+       $scope.filterTypes = [
+           {
+               text: "Vegeterian",
+               value: "Vegeterian"
+           },
+           {
+               text: "Non Vegeterian",
+               value: "NonVegeterian"
+           },
+           {
+               text: "Eggterian",
+               value: "Eggterian"
+           }
+          ];
+
+       /* -------------------------- /////FILTER ---------------------------------- */
+
+
+       $scope.$on('$ionicView.leave', function () {
            /* TODO :  Complete view  time do your logic */
            $interval.cancel(orderSummeryInterval);
        });
@@ -278,7 +312,9 @@
    });
 
 
-   /************** REVIEW CTRL  **************/
+   /************** 
+                   REVIEW CTRL  
+                            **************/
    appControllers.controller('reviewCtrl', function ($scope, appService, $stateParams, AccessScope) {
 
 
@@ -295,33 +331,71 @@
            };
 
            AccessScope.store('tableDetails', $scope.tableDetails);
+
+           $scope.orderInfo = AccessScope.get('tableDetails');
+
            /**** 
                 /TEMPORARY 
-           ****/ 
-           
+           ****/
+
            /* TODO :  loading view time do your logic */
            appService.get("vieworder/" + $stateParams.orderId, "GET", null).then(function (viewOrderResponce) {
                alert(viewOrderResponce);
                $scope.ordersResponce = viewOrderResponce;
            })
 
-           $scope.reviewData = "Scope from Review"; 
+           $scope.reviewData = "Scope from Review";
            $scope.ordersResponce = '';
- 
-           $scope.$watch("ordersResponce", function (newValue, oldValue) {   
+
+           $scope.$watch("ordersResponce", function (newValue, oldValue) {
                $scope.reviewResponce = newValue;
                $scope.reviewItems = newValue.reviewItems;
                $scope.confirmedItems = newValue.confirmedItems;
 
            });
 
+
+           $scope.placeOrder = function () {
+               debugger;
+               var kotIds = "";
+               var kotItemIds = "";
+               angular.forEach($scope.reviewItems, function (value, ri) {
+                   if (($scope.reviewItems.length - 1) != ri) {
+                       kotIds += value.kotitems[0].kotId + ",";
+                       kotItemIds += value.kotitems[0].kotItemId + ",";
+                   } else {
+                       kotIds += value.kotitems[0].kotId;
+                       kotItemIds += value.kotitems[0].kotItemId;
+                   }
+               });
+
+               var postData = {
+                   orderId: $scope.orderInfo.orderNumber,
+                   userId: $scope.orderInfo.userNumber,
+                   kotIds: kotIds,
+                   kotItemIds: kotItemIds
+               };
+               appService.post("confirmorder", postData).then(function (summery) {
+                   alert("Successfully place the order!");
+                   /* TODO :  loading view time do your logic */
+                   appService.get("vieworder/" + $scope.orderInfo.orderNumber, "GET", null).then(function (viewOrderResponce) {
+                       $scope.ordersResponce = viewOrderResponce;
+                   })
+
+
+               }, function () {
+                   alert("some thing went wrong while placing the order");
+               });
+
+           };
+
        });
 
 
    });
-    
+
    /************** INVOICE CTRL  **************/
-   appControllers.controller('invoiceCtrl', function ($scope, appService, $stateParams, AccessScope) { 
+   appControllers.controller('invoiceCtrl', function ($scope, appService, $stateParams, AccessScope) {
 
        $scope.$on('$ionicView.enter', function () {
 
@@ -336,21 +410,21 @@
            };
 
            AccessScope.store('tableDetails', $scope.tableDetails);
-           
+
            $scope.orderInfo = AccessScope.get('tableDetails');
-           
+
            /**** 
                 /TEMPORARY 
-           ****/ 
-           
+           ****/
+
            /* TODO :  loading view time do your logic */
            appService.get("getinvoice/" + $stateParams.orderId, "GET", null).then(function (invoiceResponce) {
                alert(invoiceResponce);
                $scope.invoiceResponce = invoiceResponce;
            })
- 
- 
-           $scope.$watch("invoiceResponce", function (newValue, oldValue) {   
+
+
+           $scope.$watch("invoiceResponce", function (newValue, oldValue) {
                $scope.invoiceDetails = newValue;
            });
 
@@ -358,10 +432,10 @@
 
 
    });
-    
- 
+
+
    /************** FEEDBACK CTRL  **************/
-   appControllers.controller('feedbackCtrl', function ($scope, appService, $stateParams, AccessScope) { 
+   appControllers.controller('feedbackCtrl', function ($scope, appService, $stateParams, AccessScope) {
 
        $scope.$on('$ionicView.enter', function () {
 
@@ -376,21 +450,21 @@
            };
 
            AccessScope.store('tableDetails', $scope.tableDetails);
-           
+
            $scope.orderInfo = AccessScope.get('tableDetails');
-           
+
            /**** 
                 /TEMPORARY 
-           ****/ 
-           
+           ****/
+
            /* TODO :  loading view time do your logic */
-           appService.get("getfeedback/" + $stateParams.orderId+"/"+$stateParams.userId, "GET", null).then(function (feedbackResponce) {
+           appService.get("getfeedback/" + $stateParams.orderId + "/" + $stateParams.userId, "GET", null).then(function (feedbackResponce) {
                alert(feedbackResponce);
                $scope.feedbackResponce = feedbackResponce;
            })
- 
- 
-           $scope.$watch("feedbackResponce", function (newValue, oldValue) {   
+
+
+           $scope.$watch("feedbackResponce", function (newValue, oldValue) {
                $scope.feedbackDetails = newValue;
            });
 
@@ -398,6 +472,3 @@
 
 
    });
-
-    
-
