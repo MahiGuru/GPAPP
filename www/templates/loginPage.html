@@ -14,12 +14,39 @@
 
         <input ng-model="user.userNumber" />
         <pre>{{user | json}}</pre>
-        <div class="list">
+        <div class="list" ng-show="initialDivShow">
             <label class="item item-input">
                 <span class="input-label">+91</span>
-                <input type="text">
+                <input type="tel" ng-model="user.mobileNumber">
             </label> 
         </div>
+        <button class="button button-block button-positive" ng-show="initialDivShow" ng-click="loginFirstBtnClick()">
+          Next
+        </button>
+        
+        <div class="secondDiv" ng-show="secondDivShow">
+            <div class="row">
+                <label class="item item-input">
+                  <span class="input-label">First Name</span>
+                  <input type="text" ng-model="user.firstName">
+                </label>
+            </div>
+            <div class="row">
+                <label class="item item-input">
+                  <span class="input-label">Last Name</span>
+                  <input type="text" ng-model="user.lastName">
+                </label>
+            </div>
+            <div class="row">
+                <label class="item item-input">
+                  <span class="input-label">Email</span>
+                  <input type="email" ng-model="user.email">
+                </label>
+            </div>
+        </div>
+        <button class="button button-block button-positive" ng-show="secondDivShow" ng-click="loginBtnValid()">
+          Sign In
+        </button>
 
         <a class="button icon-right ion-chevron-right button-calm button-block " href="#/common/table">Table</a>
         <a class="button icon-right ion-chevron-right button-calm button-block " href="#/gp/menu/1/1/1">Menu</a>

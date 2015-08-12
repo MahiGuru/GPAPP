@@ -43,7 +43,7 @@ angular.module('GoodPhood', ['ionic', "GoodPhood.Controller", "GoodPhood.Service
         }    
     })
     .state('common.table', {
-        url : "/table",
+        url : "/table/:userNum",
         views : {
                "commonView" : {
                     templateUrl : "templates/tablePage.html",

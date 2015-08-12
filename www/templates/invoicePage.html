@@ -1,5 +1,3 @@
- 
-
 <ion-view view-title="INVOICE">
     <ion-nav-bar class="bar-stable">
 
@@ -16,10 +14,82 @@
     <ion-content>
         <!-- The content of the page -->
         <h2>INVOICE</h2>
-        
-        
-        <pre>{{ invoiceResponce }}</pre>
+        <div class="row" class="invoiceInfo">
+            <div class="col col-67 padding-lr">
+                <div class="row padding-lr">
+                    <div class="col col-50">Status</div>
+                    <div class="col col-50">{{ invoiceDetails.status }}</div>
+                </div>
+                <div class="row padding-lr">
+                    <div class="col col-50">Invoice No </div>
+                    <div class="col col-50">{{ invoiceDetails.orderId }}</div>
+                </div>
+                <div class="row padding-lr">
+                    <div class="col col-50">Table No</div>
+                    <div class="col col-50">{{ invoiceDetails.tableNo }}</div>
+                </div>
+            </div>
+            <div class="col col-33 padding-lr">
+                <div class="row padding-lr">
+                    <div class="col col-33">Date</div>
+                    <div class="col col-67">{{ invoice.date }}</div>
+                </div>
+                <div class="row padding-lr">
+                    <div class="col col-33">Time</div>
+                    <div class="col col-67">{{ invoice.time }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="invoiceDesc">
+            <div class="row row-bottom headInvoice">
+                <div class="col col-67">Description</div>
+                <div class="col col-33">Total Price</div>
+            </div>
+            <div class="row" ng-repeat="invoice in invoiceDetails.Items">
+                <div class="col col-67">{{invoice.itemName}}</div>
+                <div class="col col-33">Rs {{ invoice.itemPrice }} x {{ invoice.itemQuantity }}</div>
+            </div>
 
+            <div class="row padding-lr">
+                <div class="col col-67">Bill Amount</div>
+                <div class="col col-33">Rs {{ totalPrice }}</div>
+            </div>
+
+            <div class="row padding-lr">
+                <div class="col col-67">Vat &#64; 5%</div>
+                <div class="col col-33">{{ invoiceDetails.VAT }}%</div>
+            </div>
+            <div class="row padding-lr">
+                <div class="col col-67">Service Tax &#64; 5%</div>
+                <div class="col col-33">{{ invoiceDetails.serviceTax }}%</div>
+            </div>
+            <div class="row padding-lr">
+                <div class="col col-67">Discount</div>
+                <div class="col col-33">{{ Discount }}%</div>
+            </div>
+            <div class="row padding-lr">
+                <div class="col col-67">Tip</div>
+                <div class="col col-33">
+                    <div class="list">
+                        <label class="item item-input">
+                            <input type="text" placeholder="tip">
+                        </label> 
+                    </div>
+                </div>
+            </div>
+            <div class="row padding-lr">
+                <div class="col col-67">Total</div>
+                <div class="col col-33">Rs {{ totalPrice }}</div>
+            </div>
+             
+                
+        <a class="button icon-left ion-chevron-left button-calm">Pay By Cash</a>
+        <a class="button icon-right ion-chevron-right button-calm">Pay By Card</a>
+
+        </div>
+
+        <!--<pre>{{ invoiceResponce }}</pre> -->
+<br><br><br><br>
         <a class="button icon-left ion-chevron-left button-calm" href="#/common/table">TABLE</a>
         <a class="button icon-right ion-chevron-right button-calm" href="#/gp/feedback/1/1">Feedback PAGE</a>
 

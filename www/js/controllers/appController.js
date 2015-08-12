@@ -1,13 +1,16 @@
    var appControllers = angular.module("GoodPhood.appCtrl", ['GoodPhood.Services', 'GoodPhood.directive']);
-   appControllers.controller('loginCtrl', function ($scope, AccessScope) {
+   appControllers.controller('loginCtrl', function ($scope, AccessScope, appService, $state) {
        $scope.user = {
-           mobileNumber: "",
-           deviceNumber: "",
-           firstName: "",
-           lastName: "",
-           email: "",
+           mobileNumber: "9441076540",
+           deviceNumber: "0.5353",
+           firstName: "Mahipal",
+           lastName: "Guru",
+           email: "mahi6535@gmail.com",
            userNumber: ''
        };
+
+       //Temporary Code..
+       if ($scope.user.deviceNumber == "") $scope.user.deviceNumber = Math.random().toFixed("4");
 
        //SETTING AND GETTING USER VALUE **** WATCHING ******
        $scope.$watch('user.userNumber', function (newValue, oldValue) {
@@ -15,20 +18,53 @@
            AccessScope.store('userNumber', newValue);
            console.log("From Access Scope = " + AccessScope.get('userNumber'));
        }, true);
-       $scope.loginFirstBtnClick = function(){
-            $scope.nextDivClick = true;
+       $scope.initialDivShow = true;
+       $scope.secondDivShow = false;
+       $scope.loginFirstBtnClick = function () {
+           $scope.initialDivShow = false;
+           $scope.secondDivShow = true;
+       }
+       $scope.loginBtnValid = function () {
+           //validatemobile
+           var postData = {
+               mobileNo: $scope.user.mobileNumber,
+               firstName: $scope.user.firstName,
+               lastName: $scope.user.lastName,
+               emailId: $scope.user.email,
+               deviceId: $scope.user.deviceNumber
+           };
+
+
+           appService.post("validatemobile", postData).then(function (loginData) {
+               alert("CLICK success");
+               AccessScope.store("userNumber", loginData.userId);
+               $scope.initialDivShow = true;
+               $scope.secondDivShow = false;
+
+               $state.go("common.table", {
+                   "userNum": loginData.userId
+               });
+
+
+
+               //$scope.orderSummeryCount = summery
+           }, function () {
+               alert("Oops error occured..");
+           });
+
        }
 
    });
-   appControllers.controller('tableCtrl', function ($scope, AccessScope) {
+   appControllers.controller('tableCtrl', function ($scope, AccessScope, $state, $stateParams) {
        $scope.tableDetails = {
            qrNumber: "",
            orderNumber: "",
            tableNumber: "",
-           userNumber: ""
+           userNumber: $stateParams.userNum
        };
        //SETTING AND GETTING TABLE RELATED VALUES **** WATCHING ******
        $scope.$watch('tableDetails.qrNumber', function (newValue, oldValue) {
+           console.log(newValue)
            console.log(newValue.charAt(0));
            if (newValue.length == 1) {
                $scope.tableDetails.qrNumber = newValue.replace(/^[0-9]/g, newValue + "#");
@@ -42,6 +78,18 @@
                console.log(AccessScope.get('tableDetails'));
            }
        }, true);
+       $scope.tableSelectedClick = function () {
+           if ($scope.tableDetails.orderNumber != "" && $scope.tableDetails.tableNumber != "" && $scope.tableDetails.userNumber != "") {
+               $state.go("gp.menu", {
+                   "venueId": $scope.tableDetails.orderNumber,
+                   "tableId": $scope.tableDetails.tableNumber,
+                   "userId": $scope.tableDetails.userNumber
+               });
+           } else {
+               alert("Please choose Table and Order Number!! ");
+           }
+       }
+
    });
 
 
@@ -259,16 +307,16 @@
                title: 'Filter',
                subTitle: 'Choose type of items',
                scope: $scope,
-               buttons: [ 
+               buttons: [
                    {
                        text: '<b>OK</b>',
                        type: 'button-positive',
                        onTap: function (e) {
-                             angular.forEach($scope.filterList, function(value){
-                                if(value.checked == true){
-                                    $scope.filteredItems.push(value);
-                                }
-                             })
+                           angular.forEach($scope.filterList, function (value) {
+                               if (value.checked == true) {
+                                   $scope.filteredItems.push(value);
+                               }
+                           })
                        }
                },
              ]
@@ -419,14 +467,37 @@
 
            /* TODO :  loading view time do your logic */
            appService.get("getinvoice/" + $stateParams.orderId, "GET", null).then(function (invoiceResponce) {
-               alert(invoiceResponce);
                $scope.invoiceResponce = invoiceResponce;
-           })
-
-
+           });
+           $scope.totalPrice = 0;
            $scope.$watch("invoiceResponce", function (newValue, oldValue) {
                $scope.invoiceDetails = newValue;
            });
+           $scope.Discount = AccessScope.get("discount") || 10;
+           $scope.$watch("invoiceDetails", function (newValue, oldValue) {
+               if (newValue != undefined) {
+                   angular.forEach(newValue.Items, function (val) {
+                       $scope.totalPrice = $scope.totalPrice + (val.itemPrice * val.itemQuantity)
+                   });
+                   //(((newValue.serviceTax) / 100) * invoiceBillTotal).toFixed(2)
+                   var serviceTax = (((newValue.serviceTax) / 100) * $scope.totalPrice);
+                   var vat = (((newValue.VAT) / 100) * $scope.totalPrice);
+                   console.log("\n\n\n\n");
+                   console.log(serviceTax);
+                   console.log(vat);
+                   $scope.totalBill = $scope.totalPrice - (serviceTax - vat).toFixed(2);
+               }
+           }, true);
+           var now = new Date();
+           var nowDate = (now.getDate()) + '/' + (now.getMonth() + 1) + '/' + now.getFullYear();
+           var nowTime = now.getHours() + ':' + ((now.getMinutes() < 10) ? ("0" + now.getMinutes()) : (now.getMinutes())) + ':' + ((now.getSeconds() < 10) ? ("0" + now.getSeconds()) : (now.getSeconds()));
+
+           $scope.invoice = {
+               date: nowDate,
+               time: nowTime,
+               totalPrice: ""
+           }
+
 
        });
 

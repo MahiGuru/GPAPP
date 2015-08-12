@@ -1,26 +1,35 @@
 <ion-view view-title="TABLE">
-   <ion-nav-bar class="bar-stable">
+    <ion-nav-bar class="bar-stable">
 
-  <!--<ion-nav-buttons side="left">
+        <!--<ion-nav-buttons side="left">
     <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
     </button>
   </ion-nav-buttons> -->
-  <ion-nav-back-button>
-  </ion-nav-back-button> 
-     
-</ion-nav-bar>
-    
-    <ion-content>
-      <!-- The content of the page -->
-      <h1>Table Page</h1>
-        
-        <input type="text" ng-model="tableDetails.qrNumber" />
-        
-        
-        
-<a class="button icon-left ion-chevron-left button-calm" href="#/common/login">login</a>
-<a class="button icon-right ion-chevron-right button-calm"href="#/gp/menu/1/1/1">MENU</a>
-        
-    </ion-content>
-  </ion-view>
+        <ion-nav-back-button>
+        </ion-nav-back-button>
 
+    </ion-nav-bar>
+
+    <ion-content>
+        <!-- The content of the page -->
+        <h1>Table Page</h1>
+ 
+        <div class="row">
+            <label class="item item-input">
+                <span class="input-label">Table#Order</span>
+                <input type="text" placeholder="1#1" ng-model="tableDetails.qrNumber">
+            </label>
+        </div>
+        
+        {{tableDetails}}
+
+
+        <button class="button button-block button-positive" ng-click="tableSelectedClick()">
+            GO TO MENU
+        </button>
+
+        <a class="button icon-left ion-chevron-left button-calm" href="#/common/login">login</a>
+        <a class="button icon-right ion-chevron-right button-calm" href="#/gp/menu/1/1/1">MENU</a>
+
+    </ion-content>
+</ion-view>
