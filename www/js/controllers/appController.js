@@ -211,7 +211,7 @@
        };
        $interval(function () {
            orderSummeryInterval();
-       }, 5000);
+       }, 2000);
 
        // ~~~~~ WATCHING ORDER SUMMERY COUNT
        $scope.$watch("orderSummeryCount", function (newValue, oldValue) {

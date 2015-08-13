@@ -37,7 +37,9 @@
                     <ion-list>
                         <div class="reviewOrders" ng-repeat="reviewItem in reviewItems">
                             <ion-item class="item-stable" ng-click="toggleGroup(reviewItem)" ng-class="{active: isGroupShown(category)}">
-                                <i class="icon" ng-class="isGroupShown(reviewItem) ? 'ion-minus' : 'ion-plus'"></i> &nbsp; {{reviewItem.itemName}}
+                                <a class="reviewDelete button button-icon icon ion-trash-b"></a>  
+                                <i class="icon" ng-class="isGroupShown(reviewItem) ? 'ion-minus' : 'ion-plus'"></i> &nbsp; 
+                                {{reviewItem.itemName}}
                             </ion-item>
                             <div class="items" ng-show="isGroupShown(reviewItem)">
                                 <ion-item class="item-accordion" ng-repeat="item in reviewItem.kotitems"> 

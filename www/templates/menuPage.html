@@ -1,13 +1,13 @@
-<ion-view view-title="MENU">
-     
+<ion-header-bar align-title="left" class="bar-positive">
+    <h1 class="title"> MENU</h1>
+    <div class="buttons">
+        <button class="button icon ion-search"></button> &nbsp;&nbsp;
+        <button class="button icon ion-funnel" ng-click="showPopup()"></button>
+    </div>
+</ion-header-bar>
 
-    <ion-header-bar align-title="left" class="bar-positive">  
-        <h1 class="title"> MENU</h1>
-        <div class="buttons"> 
-            <button class="button icon ion-search"></button> &nbsp;&nbsp;
-            <button class="button icon ion-funnel"  ng-click="showPopup()"></button>
-        </div>
-    </ion-header-bar>
+<ion-view view-title="MENU">
+
     <ion-content>
 
         <pre>{{orderDetails | json}}</pre>
@@ -19,7 +19,7 @@
         <ion-scroll direction="x" class="wide-as-needed text-center scrollTabs">
             <a class="button inline-button" ng-repeat="section in sections" ng-click="slideGoto($index)" ng-class="{active:myActiveSlide == $index}"><span>{{section.SectionName}}</span></a>
         </ion-scroll>
- 
+
 
         <ion-slide-box active-slide="myActiveSlide" does-continue="false" on-slide-changed="slideHasChanged($index)">
 
@@ -28,23 +28,76 @@
                   OPEN MODAL
                 </button> -->
                 <div class="box blue">
-                    <ion-list>
-                        <div class="categories" ng-repeat="category in section.Categories">
-                            <ion-item class="item-stable" ng-click="toggleGroup(category)" ng-class="{active: isGroupShown(category)}">
-                                <i class="icon" ng-class="isGroupShown(category) ? 'ion-minus' : 'ion-plus'"></i> &nbsp; {{category.CategoryName}}
-                            </ion-item>
-                            <div class="items" ng-show="isGroupShown(category)">
-                                <ion-item class="item-accordion" ng-repeat="items in category.Items | filter: $root.filteredItems">
-                                    <!--<pre>{{items | json}}</pre>-->
 
-                                    <h2>{{items.ItemName}}  <br><br>
+                    <div class="categories" ng-repeat="category in section.Categories">
+                        <ion-item class="item-stable" ng-click="toggleGroup(category)" ng-class="{active: isGroupShown(category)}">
+
+                            <i class="icon" ng-class="isGroupShown(category) ? 'ion-minus' : 'ion-plus'"></i> &nbsp; {{category.CategoryName}}
+
+                        </ion-item>
+                        <div class="items" ng-show="isGroupShown(category)">
+                            <ion-item class="item-accordion" ng-repeat="items in category.Items | filter: $root.filteredItems">
+                                <!--<pre>{{items | json}}</pre>-->
+                                
+                                
+                                <div class="list card" ng-class="{{items.FoodType}}">
+
+                                      <div class="item item-avatar">
+                                        <img src="mcfly.jpg">
+                                        <h2>{{items.ItemName}}</h2>
+                                        <p><span ng-if="(items.IsCustomizable == 1)" ng-click="customizeLink(items)"> Customize </span>
+                                            <a class="icon ion-minus-round" ng-click="menuMinusClick(items.ItemId, items)"></a> 
+                                             <span ng-init="items.ItemCount = 0">{{items.reviewCount + items.confirmCount + items.ItemCount }}  </span>
+                                            <a class="icon ion-plus-round" ng-click="menuPlusClick(items.ItemId, items)"></a></p>
+                                      </div>
+                                    <pre>{{ items }}</pre>
+
+                                      <div class="item item-body">
+                                       <span ng-if="items.Images.length > 0">
+                                           <img class="full-image" src="{{items.Images[0].img_url}}" />
+                                       </span>
+                                         
+                                        <p>
+                                          This is a "Facebook" styled Card. The header is created from a Thumbnail List item,
+                                          the content is from a card-body consisting of an image and paragraph text. The footer
+                                          consists of tabs, icons aligned left, within the card-footer.
+                                        </p>
+                                        <p>
+                                          <a href="#" class="subdued">1 Like</a>
+                                          <a href="#" class="subdued">5 Comments</a>
+                                        </p>
+                                      </div>
+
+                                      <div class="item tabs tabs-secondary tabs-icon-left">
+                                        <a class="tab-item" href="#">
+                                          <i class="icon ion-thumbsup"></i>
+                                          Like
+                                        </a>
+                                        <a class="tab-item" href="#">
+                                          <i class="icon ion-chatbox"></i>
+                                          Comment
+                                        </a>
+                                        <a class="tab-item" href="#">
+                                          <i class="icon ion-share"></i>
+                                          Share
+                                        </a>
+                                      </div>
+
+                                    </div>
+                                
+                                
+                                
+                                
+                                
+                               <!-- <h2>{{items.ItemName}}  <br><br>
                                             <span ng-if="(items.IsCustomizable == 1)" ng-click="customizeLink(items)"> Customize </span>
                                             <a class="icon ion-minus-round" ng-click="menuMinusClick(items.ItemId, items)"></a> 
                                              <span ng-init="items.ItemCount = 0">{{items.reviewCount + items.confirmCount + items.ItemCount }}  </span>
                                             <a class="icon ion-plus-round" ng-click="menuPlusClick(items.ItemId, items)"></a></h2>
-                                </ion-item>
-                            </div>
+-->
+                            </ion-item>
                         </div>
+                    </div>
                     </ion-list>
                 </div>
 
@@ -52,19 +105,20 @@
 
 
         </ion-slide-box>
-        <ion-footer-bar align-title="left" class="bar-assertive" ng-if="(itemsReview.reviewItems.length ==0 || itemsReview.confirmedItems.length ==0)" ng-click="orderSummeryClick(orderSummery.ReviewItemCount)">
-            <div class="buttons">
-                <button class="button">Left Button</button>
-            </div>
-            <h1 class="title" ng-if="(orderSummery.ReviewItemCount != 0)">{{orderSummery.ReviewItemCount}} Items to Review</h1>
-            <h1 class="title" ng-if="(orderSummery.ReviewItemCount == 0)">{{orderSummery.ReviewItemCount}} Items to Review</h1>
-            <div class="buttons" ng-click="doSomething()">
-                <a class="button icon-right ion-chevron-right button-clear button-dark"></a>
-            </div>
-        </ion-footer-bar>
+        <p>{{ itemsReview.reviewItems.length }} -- {{ itemsReview.confirmedItems.length }} </p>
+
 
         <a class="button icon-left ion-chevron-left button-calm" href="#/common/table">TABLE</a>
         <a class="button icon-right ion-chevron-right button-calm" href="#/gp/review/{{orderId}}">REVIEWS</a>
 
-    </ion-content>
 </ion-view>
+<ion-footer-bar align-title="left" class="bar-assertive" ng-if="(itemsReview.reviewItems.length !=0 || itemsReview.confirmedItems.length !=0)" ng-click="orderSummeryClick(orderSummery.ReviewItemCount)">
+    <div class="buttons">
+        <button class="button">Left Button</button>
+    </div>
+    <h1 class="title" ng-if="(orderSummery.ReviewItemCount != 0)">{{orderSummery.ReviewItemCount}} Items to Review</h1>
+    <h1 class="title" ng-if="(orderSummery.ReviewItemCount == 0)">{{orderSummery.ReviewItemCount}} Items to Review</h1>
+    <div class="buttons" ng-click="doSomething()">
+        <a class="button icon-right ion-chevron-right button-clear button-dark"></a>
+    </div>
+</ion-footer-bar>
