@@ -1,55 +1,54 @@
-<ion-view view-title="LOGIN">
-    <ion-nav-bar class="bar-stable">
-
-        <!--<ion-nav-buttons side="left">
-    <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
-    </button>
-  </ion-nav-buttons> -->
-
-    </ion-nav-bar>
+<ion-view>
 
     <ion-content>
-        <!-- The content of the page -->
-        <h1>Login Page</h1>
+        <div class="signupArea">
+            <h5 class="margin-0 signupHeading center-align">SIGN UP</h5>
+            <div class="col80">
+                <div class="col s12" ng-show="initialDivShow">
+                    <div class="row margin-bottom-0">
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">phone</i>
+                            <input id="icon_telephone" type="tel" class="validate" placeholder="Mobile number" ng-model="user.mobileNumber">
+                            <label for="icon_telephone">+91</label>
+                        </div>
+                    </div>
+                    <a class=" button-block waves-effect waves-light btn" ng-show="initialDivShow" ng-click="loginFirstBtnClick()">NEXT</a>
+                </div>
 
-        <input ng-model="user.userNumber" />
-        <pre>{{user | json}}</pre>
-        <div class="list" ng-show="initialDivShow">
-            <label class="item item-input">
-                <span class="input-label">+91</span>
-                <input type="tel" ng-model="user.mobileNumber">
-            </label> 
-        </div>
-        <button class="button button-block button-positive" ng-show="initialDivShow" ng-click="loginFirstBtnClick()">
-          Next
-        </button>
-        
-        <div class="secondDiv" ng-show="secondDivShow">
-            <div class="row">
-                <label class="item item-input">
-                  <span class="input-label">First Name</span>
-                  <input type="text" ng-model="user.firstName">
-                </label>
-            </div>
-            <div class="row">
-                <label class="item item-input">
-                  <span class="input-label">Last Name</span>
-                  <input type="text" ng-model="user.lastName">
-                </label>
-            </div>
-            <div class="row">
-                <label class="item item-input">
-                  <span class="input-label">Email</span>
-                  <input type="email" ng-model="user.email">
-                </label>
-            </div>
-        </div>
-        <button class="button button-block button-positive" ng-show="secondDivShow" ng-click="loginBtnValid()">
-          Sign In
-        </button>
 
-        <a class="button icon-right ion-chevron-right button-calm button-block " href="#/common/table">Table</a>
-        <a class="button icon-right ion-chevron-right button-calm button-block " href="#/gp/menu/1/1/1">Menu</a>
+
+                <div class="secondDiv" ng-show="secondDivShow">
+
+                    <div class="row"> 
+                        <div class="input-field col s12">
+                          <input placeholder="Placeholder" id="first_name" type="text" class="validate" ng-model="user.firstName">
+                          <label class="active" for="first_name">First Name</label>
+                        </div>
+                        
+                    </div>
+                    <div class="row">
+                         <div class="input-field col s12">
+                          <input placeholder="Placeholder" id="first_name" type="text" class="validate" ng-model="user.lastName">
+                          <label class="active" for="first_name">Last Name</label>
+                        </div> 
+                    </div>
+
+
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="email" type="email" class="validate" ng-model="user.email">
+                            <label class="active" for="email" data-error="wrong" data-success="right">Email</label>
+                        </div>
+                    </div>
+
+                    <a class=" button-block waves-effect waves-light btn" ng-show="secondDivShow" ng-click="loginBtnValid()">SIGN IN</a>
+
+                </div>
+
+            </div>
+        </div>
+        <!--<a class="button icon-right ion-chevron-right button-calm button-block " href="#/common/table">Table</a>
+        <a class="button icon-right ion-chevron-right button-calm button-block " href="#/gp/menu/1/1/1">Menu</a>-->
 
 
     </ion-content>

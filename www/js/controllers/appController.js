@@ -21,8 +21,8 @@
        $scope.initialDivShow = true;
        $scope.secondDivShow = false;
        $scope.loginFirstBtnClick = function () {
-           $scope.initialDivShow = false;
            $scope.secondDivShow = true;
+           $scope.initialDivShow = false;
        }
        $scope.loginBtnValid = function () {
            //validatemobile
