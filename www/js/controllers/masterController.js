@@ -16,6 +16,7 @@ angular.module("GoodPhood.Controller", ['GoodPhood.appCtrl'])
         $scope.isGroupShown = function (group) {
             return $scope.shownGroup === group;
         };
+    $scope.loaderVisible = false;
         $scope.myActiveSlide = 0;
         $scope.slidePrevious = function () {
 

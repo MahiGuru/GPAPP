@@ -1,6 +1,6 @@
 angular.module("GoodPhood.Services", [])
 
-.factory("appService", function ($http, $q, $ionicLoading) {
+.factory("appService", function ($http, $q) {
     var baseUrl = "http://dev.goodphood.in/api/";
     /*
     
@@ -30,7 +30,6 @@ angular.module("GoodPhood.Services", [])
     $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
     var get = function (url) {
         var defer = $q.defer(); 
-         
         $http.get(baseUrl + url).success(function (data) {
             
             defer.resolve(data);

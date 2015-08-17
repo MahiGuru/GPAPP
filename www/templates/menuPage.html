@@ -11,12 +11,9 @@
 <ion-view view-title="MENU">
 
     <ion-content>
+ 
 
-        <!--<pre>{{orderDetails | json}}</pre> 
-
-        <input type="text" ng-model="orderId" />-->
-
-
+        <div class="progress" ng-show="loaderVisible"><div class="indeterminate"></div></div> 
 
         <ion-scroll direction="x" class="wide-as-needed text-center scrollTabs">
             <a class="button inline-button" ng-repeat="section in sections" ng-click="slideGoto($index)" ng-class="{active:myActiveSlide == $index}"><span>{{section.SectionName}}</span></a>

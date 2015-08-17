@@ -179,13 +179,16 @@
        if ($scope.orderInfo != undefined) {
            $scope.menuPath = "create/" + $scope.orderInfo.orderNumber + "/" + $scope.orderInfo.tableNumber + "/" + $scope.orderInfo.userNumber;
        }
-
+       
+      $scope.loaderVisible = true;
        appService.get($scope.menuPath, null).then(function (resp) {
+           
            $scope.venueMenu = resp.menu.Sections;
            $scope.sampleMenuData = resp;
            $scope.orderId = resp.orderId;
            /********* Collapsible ************/
            $ionicSlideBoxDelegate.update();
+           $scope.loaderVisible = false;
 
        });
 
@@ -387,9 +390,12 @@
            ****/
 
            /* TODO :  loading view time do your logic */
+           
+           $scope.loaderVisible = true; 
            appService.get("vieworder/" + $stateParams.orderId, "GET", null).then(function (viewOrderResponce) {
                alert(viewOrderResponce);
                $scope.ordersResponce = viewOrderResponce;
+               //$scope.loaderVisible = false; 
            })
 
            $scope.reviewData = "Scope from Review";
