@@ -43,23 +43,29 @@
 
                                     <div class="item" ng-class="{'border-None' : items.Images.length <= 0}">
                                         <div class="row">
-                                            <div class="col s6">{{items.ItemName}} <br />
+                                            <div class="col s3">{{items.ItemName}}
+                                                <br />
                                                 <a class="tab-item" href="#">
-                                                  <i class="icon ion-thumbsup"></i>
-                                                  Like
+                                                    <i class="icon ion-thumbsup"></i> Like
                                                 </a>
                                             </div>
-                                            <div class="col s6 text-right padding-lr">
-                                                <a class="waves-effect waves-teal btn-flat iconMin"  ng-if="(items.IsCustomizable == 1)" ng-click="customizeLink(items)">Customize</a> 
-                                                <a class="waves-effect waves-teal btn-flat iconMin" ng-click="menuMinusClick(items.ItemId, items)">
-                                                    <i class="tiny material-icons">remove</i></a>
-                                                <span ng-init="items.ItemCount = 0">{{items.reviewCount + items.confirmCount + items.ItemCount }}</span>
-                                                <a class="waves-effect waves-teal btn-flat iconMin" ng-click="menuPlusClick(items.ItemId, items)">
-                                                    <i class="tiny material-icons">add</i></a>
-                                                
-                                                
+                                            <div class="col s9 text-right padding-lr spinnerArea">
+                                                <div>
+                                                    <a class="tiny waves-effect waves-teal btn-flat iconMin" ng-if="(items.IsCustomizable == 1)" ng-click="customizeLink(items)">
+                                                        Customize</a>
+                                                    
+                                                    <a class="waves-effect waves-teal btn-flat iconMin" ng-click="menuMinusClick(items.ItemId, items)">
+                                                        <i class="tiny material-icons">remove</i></a>
+                                                    <span ng-init="items.ItemCount = 0">
+                                                        {{items.reviewCount + items.confirmCount + items.ItemCount }}</span> 
+                                                    <a class="waves-effect waves-teal btn-flat iconMin" ng-click="menuPlusClick(items.ItemId, items)">
+                                                        <i class="material-icons">add</i></a>
+                                                </div> 
+
                                             </div>
+
                                         </div>
+
                                     </div>
 
                                     <div class="card item_img_place">
@@ -75,11 +81,11 @@
                                             <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
                                             <p>Here is some more information about this product that is only revealed once clicked on.</p>
                                         </div>
-                                    </div> 
+                                    </div>
                                 </div>
 
                         </div>
- 
+
                         </ion-item>
                     </div>
                 </div>
@@ -90,14 +96,19 @@
 
 
         </ion-slide-box>
-  
+
 </ion-view>
+
+
 <ion-footer-bar align-title="left" class="bar-stable menuFooter" ng-if="(itemsReview.reviewItems.length !=0 || itemsReview.confirmedItems.length !=0)" ng-click="orderSummeryClick(orderSummery.ReviewItemCount)">
-       
-            <a class="btn-flat btn-large waves-effect waves-light red"><i class="material-icons">account_circle</i></a>
-    
-    <h1 class="title" ng-if="(orderSummery.ReviewItemCount != 0)">{{orderSummery.ReviewItemCount}} Items to Review</h1>
-    <h1 class="title" ng-if="(orderSummery.ReviewItemCount == 0)">{{orderSummery.ReviewItemCount}} Items to Review</h1>
+
+    <a class="btn-flat btn-large waves-effect waves-light red"><i class="reviewIcon"></i></a>
+
+    <h1 class="title" ng-if="(orderSummery.ReviewItemCount != 0)">
+        <a class="reviewCountBtn waves-effect waves-light btn-flat" ng-if="(orderSummery.ReviewItemCount != 0)">
+            {{orderSummery.ReviewItemCount}} Items to Review</a>
+        <a class="reviewCountBtn waves-effect waves-light btn-flat" ng-if="(orderSummery.ReviewItemCount == 0)">
+            Checkout</a></h1>
     <div class="buttons" ng-click="doSomething()">
         <a class="button icon-right ion-chevron-right button-clear button-dark"></a>
     </div>

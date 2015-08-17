@@ -101,6 +101,8 @@ input[type=tel]:focus:not([readonly]) + label{
 }
 .categoryName{
     padding-left:0px;
+    padding-top:10px;
+    padding-bottom:10px;
 }
 .item-accordion.item{
     padding:0px;
@@ -141,10 +143,35 @@ input[type=tel]:focus:not([readonly]) + label{
 }
 .menuFooter{
     padding-left: 0px;
+    padding-top:0px;
 }
-
-
-
-
-
+.menuFooter .btn-flat{
+    padding:5px 15px;
+}
+.reviewIcon{
+    width: 45px;
+    height: 35px;
+    display: inline-block;
+    padding: 10px;
+    background: #ff6666;
+    background: url("../img/app/waiterImg.png") center center no-repeat;
+}
+.menuFooter h1{ margin:0px !important;}
+.menuFooter h1 .reviewCountBtn{
+    display: block;
+    background: #FFF;
+    height:45px;
+}
+.spinnerArea .mtop-10{
+    margin-top: -10px;
+}
+.row .reviewSpinnerArea{
+    padding-top:10px;
+}
+.block{
+    display: block;
+}
+.reviewItems .row{
+    margin-bottom: 0px;
+}
 
