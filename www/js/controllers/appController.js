@@ -395,7 +395,9 @@
            appService.get("vieworder/" + $stateParams.orderId, "GET", null).then(function (viewOrderResponce) {
                alert(viewOrderResponce);
                $scope.ordersResponce = viewOrderResponce;
-               //$scope.loaderVisible = false; 
+               $scope.loaderVisible = false;  
+               AccessScope.store('discount', viewOrderResponce.discount);
+                 
            })
 
            $scope.reviewData = "Scope from Review";
@@ -470,28 +472,27 @@
            /**** 
                 /TEMPORARY 
            ****/
-
+           
+           $scope.loaderVisible = true; 
            /* TODO :  loading view time do your logic */
            appService.get("getinvoice/" + $stateParams.orderId, "GET", null).then(function (invoiceResponce) {
                $scope.invoiceResponce = invoiceResponce;
+               $scope.loaderVisible = false; 
            });
            $scope.totalPrice = 0;
            $scope.$watch("invoiceResponce", function (newValue, oldValue) {
                $scope.invoiceDetails = newValue;
            });
-           $scope.Discount = AccessScope.get("discount") || 10;
+           $scope.Discount = AccessScope.get("discount") || 30;
            $scope.$watch("invoiceDetails", function (newValue, oldValue) {
                if (newValue != undefined) {
                    angular.forEach(newValue.Items, function (val) {
                        $scope.totalPrice = $scope.totalPrice + (val.itemPrice * val.itemQuantity)
                    });
                    //(((newValue.serviceTax) / 100) * invoiceBillTotal).toFixed(2)
-                   var serviceTax = (((newValue.serviceTax) / 100) * $scope.totalPrice);
-                   var vat = (((newValue.VAT) / 100) * $scope.totalPrice);
-                   console.log("\n\n\n\n");
-                   console.log(serviceTax);
-                   console.log(vat);
-                   $scope.totalBill = $scope.totalPrice - (serviceTax - vat).toFixed(2);
+                   $scope.serviceTax = (((newValue.serviceTax) / 100) * $scope.totalPrice);
+                   $scope.vat = (((newValue.VAT) / 100) * $scope.totalPrice); 
+                   $scope.totalBill = $scope.totalPrice - ($scope.serviceTax - $scope.vat).toFixed(2);
                }
            }, true);
            var now = new Date();

@@ -12,9 +12,11 @@
 
 
     <ion-content>
-        <!-- The content of the page -->
-        <h2>INVOICE</h2>
-        <div class="row" class="invoiceInfo">
+        
+        <div class="progress" ng-show="loaderVisible"><div class="indeterminate"></div></div>  
+        <!-- The content of the page --> 
+        <div class="invoiceInfo">
+        <div class="row">
             <div class="col col-67 padding-lr">
                 <div class="row padding-lr">
                     <div class="col col-50">Status</div>
@@ -50,30 +52,30 @@
                 <div class="col col-33">Rs {{ invoice.itemPrice }} x {{ invoice.itemQuantity }}</div>
             </div>
 
-            <div class="row padding-lr">
+            <div class="row">
                 <div class="col col-67">Bill Amount</div>
                 <div class="col col-33">Rs {{ totalPrice }}</div>
             </div>
 
-            <div class="row padding-lr">
+            <div class="row">
                 <div class="col col-67">Vat &#64; 5%</div>
-                <div class="col col-33">{{ invoiceDetails.VAT }}%</div>
+                <div class="col col-33">{{ vat}}</div>
             </div>
-            <div class="row padding-lr">
-                <div class="col col-67">Service Tax &#64; 5%</div>
-                <div class="col col-33">{{ invoiceDetails.serviceTax }}%</div>
+            <div class="row">
+                <div class="col col-67">Service Tax &#64; {{ invoiceDetails.serviceTax }}%</div>
+                <div class="col col-33">{{ serviceTax }}</div>
             </div>
-            <div class="row padding-lr">
+            <div class="row">
                 <div class="col col-67">Discount</div>
                 <div class="col col-33">{{ Discount }}%</div>
             </div>
-            <div class="row padding-lr">
+            <div class="row row-center margin-0">
                 <div class="col col-67">Tip</div>
                 <div class="col col-33">
-                    <div class="list">
-                        <label class="item item-input">
-                            <input type="text" placeholder="tip">
-                        </label> 
+                    <div class="list"> 
+                        <div class="input-field col s12 padding-lr">
+                          <input placeholder="tip" id="first_name" type="text" class="validate"> 
+                        </div>  
                     </div>
                 </div>
             </div>
@@ -83,15 +85,15 @@
             </div>
              
                 
-        <a class="button icon-left ion-chevron-left button-calm">Pay By Cash</a>
-        <a class="button icon-right ion-chevron-right button-calm">Pay By Card</a>
+        <a class="button icon-left ion-chevron-left button-calm" href="#/gp/feedback/1/1">Pay By Cash</a>
+        <a class="button icon-right ion-chevron-right button-calm"  href="#/gp/feedback/1/1">Pay By Card</a>
 
         </div>
 
         <!--<pre>{{ invoiceResponce }}</pre> -->
 <br><br><br><br>
-        <a class="button icon-left ion-chevron-left button-calm" href="#/common/table">TABLE</a>
-        <a class="button icon-right ion-chevron-right button-calm" href="#/gp/feedback/1/1">Feedback PAGE</a>
-
+        <!--<a class="button icon-left ion-chevron-left button-calm" href="#/common/table">TABLE</a>
+        <a class="button icon-right ion-chevron-right button-calm" href="#/gp/feedback/1/1">Feedback PAGE</a> -->
+        </div>
     </ion-content>
 </ion-view>

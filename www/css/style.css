@@ -174,4 +174,19 @@ input[type=tel]:focus:not([readonly]) + label{
 .reviewItems .row{
     margin-bottom: 0px;
 }
-
+.progress{ 
+    background-color: #ccc;
+}
+.progress .indeterminate {
+    background-color: #FF6202;
+}
+.invoiceInfo .row{
+    margin-bottom: 15px;
+}
+.two-cols{
+    width: 50%;
+    display: inline-block;
+}
+.greyColor{
+    color:#999;
+}
