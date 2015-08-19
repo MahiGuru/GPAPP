@@ -1,5 +1,5 @@
    var appControllers = angular.module("GoodPhood.appCtrl", ['GoodPhood.Services', 'GoodPhood.directive']);
-   appControllers.controller('loginCtrl', function ($scope, AccessScope, appService, $state) {
+   appControllers.controller('loginCtrl', function ($scope, AccessScope, appService, $state, $ionicModal) {
        $scope.user = {
            mobileNumber: "9441076540",
            deviceNumber: "0.5353",
@@ -8,7 +8,7 @@
            email: "mahi6535@gmail.com",
            userNumber: ''
        };
-
+        
        //Temporary Code..
        if ($scope.user.deviceNumber == "") $scope.user.deviceNumber = Math.random().toFixed("4");
 
@@ -240,17 +240,39 @@
 
        /* ------------------------- CUSTOMIZE PANEL----------------------------------- */
        $scope.customizeLink = function (item) {
-           $scope.modelItem = item;
+           $scope.customizeData = "";
            appService.get("getpreferences/" + $scope.orderInfo.orderNumber + "/" + item.ItemId + "/" + $scope.orderInfo.orderNumber, null).then(function (customiseData) {
                alert("success");
                console.log(customiseData);
-               $scope.customizeData = customiseData;
-           });
-
-
+               if(customiseData != null || customiseData != undefined){
+               $scope.customizeData = customiseData[0];
+               $scope.data.oldPrice = $scope.modelItem.Price;
+               if(customiseData[0].options != undefined || customiseData[0].options != null){    
+                   angular.forEach($scope.customizeData.options, function(obj){
+                        if(obj.isDefault == 1) 
+                            $scope.data.customizeRadioSelected = obj.optionName;
+                   });
+               }
+                   
+                   
+               }else $scope.customizeData = "";
+           }); 
+           
+           $scope.modal.show(); 
+           
+           $scope.data = {
+               customizeRadioSelected : "",
+               oldPrice : ''
+           }
            console.log("customize link");
-           $scope.modal.show();
-       }
+           $scope.customizeRadioChange = function(item){
+            console.log(item);
+               $scope.modelItem.Price = $scope.data.oldPrice+item.price
+           }
+           $scope.modelItem = item; 
+            
+       }  
+
        $scope.savePreference = function () {
            alert("save prefernce");
            /*

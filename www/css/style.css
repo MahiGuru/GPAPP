@@ -190,3 +190,13 @@ input[type=tel]:focus:not([readonly]) + label{
 .greyColor{
     color:#999;
 }
+.modal{
+    display: block;
+    width: 100%;
+}
+.padding-left-0{
+    padding-left: 0px;
+}
+.padding-lr-10{
+    padding:0 10px;
+}
