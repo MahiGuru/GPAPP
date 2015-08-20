@@ -40,7 +40,7 @@
             <div class="row row-center two-cols" ng-repeat="items in feedbackDetails.itemFeedback">
               <div class="col col-67">{{items.name}}</div>
                 <div class="col col-33"><a class="isLikeIcon"> 
-                    <span ng-class="{'greyColor':items.isLike == 0}"><i class="material-icons">thumb_up</i></span>
+                    <span ng-class="{'greyColor':items.isLike == 0}" ng-click="itemLikeMethod(items)"><i class="material-icons">thumb_up</i></span>
                     </a>
                 </div>
             </div>

@@ -76,7 +76,17 @@ angular.module('GoodPhood', ['ionic', "GoodPhood.Controller", "GoodPhood.Service
                 controller : "reviewCtrl"
             }
         }
-    }).state('gp.invoice', {
+    })
+    .state('gp.users', {
+        url : "/users/:orderId/:userId",
+        views : {
+            "viewContent" : {
+                templateUrl : "templates/users.html",
+                controller : "usersCtrl" 
+            }
+        }
+    })    
+    .state('gp.invoice', {
         url : "/invoice/:orderId",
         views : {
             "viewContent" : {

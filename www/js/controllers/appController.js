@@ -244,31 +244,41 @@
            appService.get("getpreferences/" + $scope.orderInfo.orderNumber + "/" + item.ItemId + "/" + $scope.orderInfo.orderNumber, null).then(function (customiseData) {
                alert("success");
                console.log(customiseData);
-               if(customiseData != null || customiseData != undefined){
+               if(customiseData[0] != undefined || customiseData[0] != null){    
                $scope.customizeData = customiseData[0];
                $scope.data.oldPrice = $scope.modelItem.Price;
-               if(customiseData[0].options != undefined || customiseData[0].options != null){    
                    angular.forEach($scope.customizeData.options, function(obj){
                         if(obj.isDefault == 1) 
                             $scope.data.customizeRadioSelected = obj.optionName;
                    });
+                $scope.modal.show(); 
+               }else {
+                   $scope.customizeData = customiseData;
+                    $scope.showCustomizeAlert(customiseData.message);
                }
-                   
-                   
-               }else $scope.customizeData = "";
            }); 
-           
-           $scope.modal.show(); 
            
            $scope.data = {
                customizeRadioSelected : "",
-               oldPrice : ''
+               oldPrice : '',
+               customizeCheckBoxSelected : "",
            }
            console.log("customize link");
            $scope.customizeRadioChange = function(item){
-            console.log(item);
+               console.log(item);
                $scope.modelItem.Price = $scope.data.oldPrice+item.price
            }
+           $scope.customizeCheckboxChange = function(item){
+               console.log(item);
+               
+           }
+           $scope.showCustomizeAlert = function(msg) {
+            $ionicPopup.alert({
+              title: 'Customize',
+              content: msg+'!!!'
+            }).then(function(res) { 
+            });
+          };
            $scope.modelItem = item; 
             
        }  
@@ -562,12 +572,78 @@
                alert(feedbackResponce);
                $scope.feedbackResponce = feedbackResponce;
            })
-
+           $scope.itemLikeMethod = function(items){
+                //var status = (that.parents(".feedBackCol").find(".feedItemLikeId").val() == false || that.parents(".feedBackCol").find(".feedItemLikeId").val() == "") ? 1 : 0;
+                console.log(items);
+               
+                var postData = { orderId: parseInt($stateParams.orderId), userId: parseInt($stateParams.userId), itemId: items.id, status: items.isLike };
+                 console.log(postData);
+                 
+               appService.post("addorupdatelike", postData).then(function (summery) {
+                   alert("CLICK success");
+                   console.log(summery);
+                   items.isLike = summery.likeFlag
+                   //$scope.orderSummeryCount = summery
+               }, function () {                   
+                   alert("some thing went wrong....") 
+               }); 
+                
+           }
 
            $scope.$watch("feedbackResponce", function (newValue, oldValue) {
                $scope.feedbackDetails = newValue;
            });
 
+       });
+
+
+   });
+   
+   /************** USERS CTRL  **************/
+   appControllers.controller('usersCtrl', function ($scope, appService, $stateParams, AccessScope) {
+
+       $scope.$on('$ionicView.enter', function () {
+
+           /**** 
+                TEMPORARY 
+           ****/
+           $scope.tableDetails = {
+               qrNumber: "",
+               orderNumber: "1",
+               tableNumber: "1",
+               userNumber: "2"
+           };
+
+           AccessScope.store('tableDetails', $scope.tableDetails);
+
+           $scope.orderInfo = AccessScope.get('tableDetails');
+
+           /**** 
+                /TEMPORARY 
+           ****/
+            
+               $scope.loaderVisible = true;
+           /* TODO :  loading view time do your logic */
+           appService.get("getusers/" + $stateParams.orderId + "/" + $stateParams.userId, "GET", null).then(function (usersResponse) {
+               alert(usersResponse);
+               $scope.usersResponse = usersResponse;
+               $scope.loaderVisible = false;
+           });
+           //authorizeuser;
+           var postData = {orderId: parseInt($stateParams.orderId), userId: parseInt($stateParams.userId)}
+           $scope.userAcceptMethod = function(user){
+               console.log(user);
+               appService.post("authorizeuser", postData).then(function (userSummery) {
+                   alert("CLICK success");
+                   console.log(userSummery); 
+                   //$scope.orderSummeryCount = summery
+               }, function () {                   
+                   alert("some thing went wrong....") 
+               }); 
+           }
+           
+           
+            
        });
 
 

@@ -58,8 +58,16 @@
                       {{ option.optionName}}
                   </ion-radio>
                 </div>
-                 
+                <div ng-if="customizeData.sType == 'multiple'">
+               <ion-checkbox ng-repeat="option in customizeData.options"
+                      ng-model="data.customizeCheckBoxSelected" 
+                      ng-change="customizeCheckboxChange(option)" 
+                      ng-checked="option.selected">
+                   {{ option.optionName}}
+                </ion-checkbox> 
+                </div>
             </div>
+            
              
 
  
