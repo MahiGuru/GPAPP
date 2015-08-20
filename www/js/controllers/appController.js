@@ -630,12 +630,14 @@
                $scope.loaderVisible = false;
            });
            //authorizeuser;
-           var postData = {orderId: parseInt($stateParams.orderId), userId: parseInt($stateParams.userId)}
            $scope.userAcceptMethod = function(user){
-               console.log(user);
-               appService.post("authorizeuser", postData).then(function (userSummery) {
-                   alert("CLICK success");
-                   console.log(userSummery); 
+               console.log(user); 
+           var postData = {rowId: user.rowId, status: user.status}
+               appService.post("authorizeuser", postData).then(function (userStatus) {
+                   alert("CLICK success"); 
+                   user.status = userStatus.updatedStatus
+                   console.log(user);
+                   $scope.$apply();
                    //$scope.orderSummeryCount = summery
                }, function () {                   
                    alert("some thing went wrong....") 
