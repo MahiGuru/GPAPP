@@ -2,6 +2,7 @@
 
     <ion-content> 
         <div class="signupArea">
+            <div class="loginArea">
             <h5 class="margin-0 signupHeading center-align">SIGN UP</h5>
             <div class="col80">
                 <div class="col s12" ng-show="initialDivShow">
@@ -18,7 +19,26 @@
 
 
                 <div class="secondDiv" ng-show="secondDivShow">
-
+                    
+                    <div class="list">
+                      <label class="item item-input">
+                        <span class="input-label">First Name</span>
+                        <input type="text" placeholder="First Name" class="validate" ng-model="user.firstName">
+                      </label>
+                      <label class="item item-input">
+                        <span class="input-label">Last Name</span>
+                        <input type="text" placeholder="Last Name" class="validate" ng-model="user.lastName">
+                      </label>
+                      <label class="item item-input">
+                        <span class="input-label">Email</span>
+                        <input type="email" placeholder="Email" class="validate" ng-model="user.email">
+                      </label>
+                    </div>
+                    
+                    
+                    
+                    
+                    <!--
                     <div class="row"> 
                         <div class="input-field col s12">
                           <input placeholder="Placeholder" id="first_name" type="text" class="validate" ng-model="user.firstName">
@@ -40,11 +60,11 @@
                             <label class="active" for="email" data-error="wrong" data-success="right">Email</label>
                         </div>
                     </div>
-
+                    -->
                     <a class=" button-block waves-effect waves-light btn" ng-show="secondDivShow" ng-click="loginBtnValid()">SIGN IN</a>
 
                 </div>
-
+                </div>
             </div>
         </div>
         <!--<a class="button icon-right ion-chevron-right button-calm button-block " href="#/common/table">Table</a>

@@ -1,4 +1,5 @@
-   var appControllers = angular.module("GoodPhood.appCtrl", ['GoodPhood.Services', 'GoodPhood.directive']);
+   var appControllers = angular.module("GoodPhood.appCtrl", ['GoodPhood.Services', 'GoodPhood.directive', 'ionicLazyLoad']);
+
    appControllers.controller('loginCtrl', function ($scope, AccessScope, appService, $state, $ionicModal, $ionicPlatform, $cordovaDevice) {
        $scope.user = {
            mobileNumber: "9441076540",
