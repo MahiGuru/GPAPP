@@ -16,6 +16,21 @@ angular.module("GoodPhood.Controller", ['GoodPhood.appCtrl'])
         $scope.isGroupShown = function (group) {
             return $scope.shownGroup === group;
         };
+    $scope.tableDetails = {
+                               qrNumber: "",
+                               orderNumber: "",
+                               tableNumber: "",
+                               userNumber: ""
+                           };
+    $scope.AccesstableDetails = AccessScope.get("tableDetails");
+    
+        $scope.$watch('AccesstableDetails', function (newValue) {
+            console.log("changed value");
+             $scope.tableDetails = newValue;
+            console.log($scope.tableDetails);
+        }, true);
+    
+    
     $scope.loaderVisible = false;
         $scope.myActiveSlide = 0;
         $scope.slidePrevious = function () {

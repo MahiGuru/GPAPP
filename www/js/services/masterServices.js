@@ -54,8 +54,10 @@ angular.module("GoodPhood.Services", [])
         //TODO:  SHOULD WORK FOR ANULAR POST
         $.ajax({
             url: baseUrl + url,
-            data: data,
             type: "POST",
+            data: data,
+            //contentType: "application/json",
+            contentType: "application/x-www-form-urlencoded",
             dataType: "json",
             success: function (data) {
                 alert("posting done....");

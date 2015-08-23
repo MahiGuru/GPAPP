@@ -1,5 +1,5 @@
    var appControllers = angular.module("GoodPhood.appCtrl", ['GoodPhood.Services', 'GoodPhood.directive']);
-   appControllers.controller('loginCtrl', function ($scope, AccessScope, appService, $state, $ionicModal) {
+   appControllers.controller('loginCtrl', function ($scope, AccessScope, appService, $state, $ionicModal, $ionicPlatform, $cordovaDevice) {
        $scope.user = {
            mobileNumber: "9441076540",
            deviceNumber: "0.5353",
@@ -8,7 +8,24 @@
            email: "mahi6535@gmail.com",
            userNumber: ''
        };
-        
+        $ionicPlatform.ready(function() {
+            // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+            // for form inputs)
+            if(window.cordova && window.cordova.plugins.Keyboard) {
+              cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+            }
+            if(window.StatusBar) {
+              StatusBar.styleDefault();
+            }
+
+            var device = $cordovaDevice.getDevice();  
+            var uuid = $cordovaDevice.getUUID();
+            $scope.user.deviceNumber = uuid;
+            console.log(device);
+            console.log($scope.user);
+
+
+          });
        //Temporary Code..
        if ($scope.user.deviceNumber == "") $scope.user.deviceNumber = Math.random().toFixed("4");
 
@@ -32,8 +49,7 @@
                lastName: $scope.user.lastName,
                emailId: $scope.user.email,
                deviceId: $scope.user.deviceNumber
-           };
-
+           }; 
 
            appService.post("validatemobile", postData).then(function (loginData) {
                alert("CLICK success");
@@ -566,11 +582,13 @@
            /**** 
                 /TEMPORARY 
            ****/
-
+           
+           $scope.loaderVisible = true; 
            /* TODO :  loading view time do your logic */
            appService.get("getfeedback/" + $stateParams.orderId + "/" + $stateParams.userId, "GET", null).then(function (feedbackResponce) {
                alert(feedbackResponce);
                $scope.feedbackResponce = feedbackResponce;
+            $scope.loaderVisible = false; 
            })
            $scope.itemLikeMethod = function(items){
                 //var status = (that.parents(".feedBackCol").find(".feedItemLikeId").val() == false || that.parents(".feedBackCol").find(".feedItemLikeId").val() == "") ? 1 : 0;
@@ -582,7 +600,9 @@
                appService.post("addorupdatelike", postData).then(function (summery) {
                    alert("CLICK success");
                    console.log(summery);
-                   items.isLike = summery.likeFlag
+                   if(summery.status){
+                        items.isLike = summery.likeFlag
+                   }
                    //$scope.orderSummeryCount = summery
                }, function () {                   
                    alert("some thing went wrong....") 

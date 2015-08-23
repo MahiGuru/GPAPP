@@ -123,6 +123,7 @@ input[type=tel]:focus:not([readonly]) + label{
 }
 .card .card-reveal{
     z-index: 99;
+    opacity: 0.9;
 }
 .tab-item{
     text-align:left;
