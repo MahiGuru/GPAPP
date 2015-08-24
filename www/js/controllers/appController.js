@@ -51,13 +51,13 @@
                emailId: $scope.user.email,
                deviceId: $scope.user.deviceNumber
            }; 
-
+           $scope.loaderVisible = true;
            appService.post("validatemobile", postData).then(function (loginData) {
                alert("CLICK success");
                AccessScope.store("userNumber", loginData.userId);
                $scope.initialDivShow = true;
-               $scope.secondDivShow = false;
-
+               $scope.secondDivShow = false; 
+                $scope.loaderVisible = false;
                $state.go("common.table", {
                    "userNum": loginData.userId
                });
@@ -277,16 +277,23 @@
            
            $scope.data = {
                customizeRadioSelected : "",
+               customizeOptionIds : [],
                oldPrice : '',
-               customizeCheckBoxSelected : "",
+               customizeCheckBoxSelected : [],
            }
            console.log("customize link");
            $scope.customizeRadioChange = function(item){
                console.log(item);
+               $scope.data.customizeOptionIds = [];
+               $scope.data.customizeOptionIds.push(item.id);
                $scope.modelItem.Price = $scope.data.oldPrice+item.price
            }
            $scope.customizeCheckboxChange = function(item){
                console.log(item);
+               if($scope.data.customizeOptionIds.indexOf(item.id)){
+                   $scope.data.customizeOptionIds.push(item.id);
+                   $scope.modelItem.Price = $scope.data.oldPrice+item.price
+               }
                
            }
            $scope.showCustomizeAlert = function(msg) {
@@ -300,17 +307,18 @@
             
        }  
 
-       $scope.savePreference = function () {
+       $scope.savePreference = function (item) {
            alert("save prefernce");
-           /*
-           var postData = { orderId: $scope.orderInfo.orderNumber, itemId: modelItem.ItemId, userId: $scope.orderInfo.orderNumber, options: options };
-           appService.post("savepreferences", postData)
-           .then(function (customiseData) {
-                alert("success");
-                console.log(customiseData);
-               $scope.customizeData = customiseData;
-           });
-           */
+            console.log($scope.data.customizeOptionIds.join(","));
+           var postData = { orderId:  $scope.orderInfo.orderNumber, itemId: item.ItemId, userId: $scope.orderInfo.userNumber, options: $scope.data.customizeOptionIds.join(",") };
+           console.log(postData)
+            appService.post("savepreferences", postData).then(function (summery) {
+                   alert("Successfully Saved the Preferences!");
+                   $scope.modal.hide();  
+               }, function () {
+                   alert("some thing went wrong while Saving the preferences");
+               });
+            
        };
        $ionicModal.fromTemplateUrl('templates/customizePage.html', {
            scope: $scope,

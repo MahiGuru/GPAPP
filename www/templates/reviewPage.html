@@ -34,12 +34,12 @@
                         <div class="reviewOrders reviewItems" ng-repeat="reviewItem in reviewItems">
                             <ion-item class="item-stable item-icon-right categoryName waves-effect waves-teal block" ng-click="toggleGroup(reviewItem)" ng-class="{active: isGroupShown(reviewItem)}">
                                 <div class="row">
-                                    <div class="col s8">
+                                    <div class="col s8 padding-lr">
                                         &nbsp; {{reviewItem.itemName}}</div>
                                   
-                                    <div class="col s4 text-right">
+                                    <div class="col s3 text-right">
                                         <span>X {{reviewItem.reviewCount}}</span>
-                                        <i class="icon" ng-class="isGroupShown(reviewItem) ? 'ion-ios-arrow-down' : 'ion-ios-arrow-right'"></i> 
+                                        <i class="icon" ng-class="isGroupShown(reviewItem) ? 'ion-ios-arrow-up' : 'ion-ios-arrow-down'"></i> 
                                     </div>
                                 </div>
                             </ion-item>
@@ -99,8 +99,7 @@
 
 
         </ion-slide-box>
-
-        <a class="button icon-right ion-chevron-right button-calm" href="#/gp/invoice/1">INVOICE PAGE</a>
+ 
 
     </ion-content>
 </ion-view>

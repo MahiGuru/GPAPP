@@ -123,8 +123,7 @@ input[type=tel]:focus:not([readonly]) + label{
     -moz-box-shadow:none;
     margin-bottom: 0px !important;
 }
-.card .card-content.item_Desc{
-    margin-top: -48px;
+.card .card-content.item_Desc{ 
     position: absolute;
     z-index: 98;
     display: block;
@@ -132,6 +131,7 @@ input[type=tel]:focus:not([readonly]) + label{
     padding-top: 0px !important;
     padding-bottom: 0 !important;
     text-align:right;
+    bottom:0px;
     
 }
 .card .card-reveal{
@@ -238,3 +238,45 @@ background: radial-gradient(ellipse at center, rgba(250,53,53,1) 0%, rgba(252,69
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fa3535', endColorstr='#ff6666', GradientType=1 );
 
 }
+.imagesSlider .slider-slide{
+    min-height: 100px;
+}
+.item_NonVegetarian, .item_Vegetarian, .item_Eggetarian{
+    width:10px;
+    height:10px; 
+    display: inline-block;
+    background: #F00;
+    border-radius:30px;
+    -webkit-border-radius:30px;
+    -o-border-radius:30px;
+}
+.item_Vegetarian{
+    background-color: darkgreen;
+}
+.item_Eggetarian{
+    background-color: darkorange;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
