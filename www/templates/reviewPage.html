@@ -22,14 +22,16 @@
             </span></a>
         </ion-scroll>
 
-
+        
+        <ion-scroll zooming="true" direction="y" style="height: {{winHeight - 200}}px">
         <ion-slide-box class="reviewContent " active-slide="myActiveSlide" does-continue="false" on-slide-changed="slideHasChanged($index)">
 
             <ion-slide>
 
                 <div class="box">
-
-                    <div ng-if="(reviewItems.length == 0)"> There are no review items</div>
+                    <div class="row"> 
+                    <div ng-if="(reviewItems.length == 0)" class="col col-middle"> <br><br><br><br>There are no review items</div>
+                        </div>
                     <ion-list>
                         <div class="reviewOrders reviewItems" ng-repeat="reviewItem in reviewItems">
                             <ion-item class="item-stable item-icon-right categoryName waves-effect waves-teal block" ng-click="toggleGroup(reviewItem)" ng-class="{active: isGroupShown(reviewItem)}">
@@ -65,8 +67,10 @@
                         </div>
                     </ion-list>
                 </div>
-
-                <a ng-show="(reviewItems.length > 0)" class="button icon-left ion-chevron-left button-calm" ng-click="placeOrder()">Place Order</a>
+                <div class="text-right padding-10"> 
+                        <a ng-show="(reviewItems.length > 0)"  class="waves-effect waves-light btn placeOrderBtn" ng-click="placeOrder()">
+                            <i class="material-icons right"></i>Place Order</a> 
+                </div>
 
             </ion-slide>
 
@@ -74,7 +78,7 @@
                 <div class="box">
                     <ion-list>
                         <div ng-if="(confirmedItems.length == 0)">
-                            <br>
+                            <br><br><br>
                             <br>There are no pending items to confirme
                             <br>
                             <br>
@@ -92,14 +96,18 @@
                             </div>
                         </div>
                     </ion-list>
-                </div>
-                <a ng-show="(confirmedItems.length > 0)" class="button icon-right ion-chevron-right button-calm" href="#/gp/invoice/1">CHECK OUT</a>
+                </div> 
+                <div class="text-right padding-10">
+                     
+                        <a class="waves-effect waves-light btn checkOutBtn" ng-show="(confirmedItems.length > 0)"  href="#/gp/invoice/{{orderInfo.orderNumber}}">
+                            <i class="material-icons right"></i>CHECK OUT</a>
+                     </div>
             </ion-slide>
 
 
 
         </ion-slide-box>
- 
+        </ion-scroll>
 
     </ion-content>
 </ion-view>

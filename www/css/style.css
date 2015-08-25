@@ -64,6 +64,14 @@
     font-size: 12px;
     font-weight: bold;
     color: #666;
+    position: absolute;
+    right:100px;
+        
+}
+.spinnerArea .spinControllers{
+    width:100px;
+    display: inline-block;
+    vertical-align: middle;
 }
 .slider-slide{
     min-height: 380px;
@@ -90,6 +98,22 @@ input[type=tel]:focus:not([readonly]) + label{
     box-shadow: none;
     text-align: left;
 }
+input[type=text]:focus:not([readonly]), input[type=password]:focus:not([readonly]), input[type=email]:focus:not([readonly]), input[type=url]:focus:not([readonly]), input[type=time]:focus:not([readonly]), input[type=date]:focus:not([readonly]), input[type=datetime-local]:focus:not([readonly]), input[type=tel]:focus:not([readonly]), input[type=number]:focus:not([readonly]), input[type=search]:focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]) {
+    border-bottom: 1px solid #666;
+    box-shadow: 0 1px 0 0 #666;
+}
+input[type=text]:focus:not([readonly]) + label, input[type=password]:focus:not([readonly]) + label, input[type=email]:focus:not([readonly]) + label, input[type=url]:focus:not([readonly]) + label, input[type=time]:focus:not([readonly]) + label, input[type=date]:focus:not([readonly]) + label, input[type=datetime-local]:focus:not([readonly]) + label, input[type=tel]:focus:not([readonly]) + label, input[type=number]:focus:not([readonly]) + label, input[type=search]:focus:not([readonly]) + label, textarea.materialize-textarea:focus:not([readonly]) + label{
+    color:#333;
+}
+.scrollTabs{
+  overflow: scroll;
+  white-space: nowrap;
+}
+.scroll { 
+  min-width: 100%;
+}
+.spinnerArea{ position:relative}
+
 .scrollTabs .button.button.active {
     border-bottom: 4px solid #ff6666;
 } 
@@ -112,7 +136,7 @@ input[type=tel]:focus:not([readonly]) + label{
 .categoryName{
     padding-left:0px;
     padding-top:10px;
-    padding-bottom:10px;
+    padding-bottom:5px;
 }
 .item-accordion.item{
     padding:0px;
@@ -256,11 +280,46 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fa3535', end
 .item_Eggetarian{
     background-color: darkorange;
 }
-
-
-
-
-
+.imagesSlider.slider{
+    visibility: visible;
+}
+.searchIcon{
+    font-size:2.5rem;
+    color:#666;
+}
+.bar .button.button-icon.searchIcon {
+    font-size:36px;
+    padding-right:10px;
+    border-right:1px solid #ccc;
+    position: relative;
+    top:2px;    
+}
+.placeOrderBtn{
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#8fc400+0,8fc400+100;Green+Flat+%236 */
+background: rgb(143,196,0); /* Old browsers */
+background: -moz-linear-gradient(top,  rgba(143,196,0,1) 0%, rgba(143,196,0,1) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(143,196,0,1)), color-stop(100%,rgba(143,196,0,1))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  rgba(143,196,0,1) 0%,rgba(143,196,0,1) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  rgba(143,196,0,1) 0%,rgba(143,196,0,1) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  rgba(143,196,0,1) 0%,rgba(143,196,0,1) 100%); /* IE10+ */
+background: linear-gradient(to bottom,  rgba(143,196,0,1) 0%,rgba(143,196,0,1) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8fc400', endColorstr='#8fc400',GradientType=0 ); /* IE6-9 */
+    border-color: #419A00;
+    background-color: #578C00;
+    color: #fff;
+    font-weight: bold;
+}
+.padding-10{
+    padding:10px;
+}
+.checkOutBtn{
+    background-color: #666;
+    font-size: 12px;
+    font-weight: bold;
+}
+.payByBtn{
+    background-color:#666;
+}
 
 
 

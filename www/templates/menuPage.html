@@ -1,8 +1,9 @@
 <ion-header-bar align-title="left" class=" bar-stable">
     <h1 class="title"> MENU</h1>
     <div class="buttons">
-        <button class="button icon ion-search"></button> &nbsp;&nbsp;
-        <button class="button icon ion-funnel" ng-click="showPopup()"></button>
+        <a><i class="button button-icon icon small searchIcon  material-icons">search</i></a>
+         &nbsp;&nbsp;
+        <a class="button button-icon icon ion-funnel" ng-click="showPopup()"></a> 
     </div>
 
 
@@ -31,7 +32,7 @@
             <a class="button inline-button" ng-repeat="section in sections" ng-click="slideGoto($index)" ng-class="{active:myActiveSlide == $index}"><span>{{section.SectionName}}</span></a>
         </ion-scroll>
 
-
+              
         <ion-slide-box class="menuContent" active-slide="myActiveSlide" does-continue="false" on-slide-changed="slideHasChanged($index)">
 
             <ion-slide ng-repeat="section in sections">
@@ -46,6 +47,8 @@
                         <ion-item class="item-stable item-icon-right categoryName" ng-click="toggleGroup(category)" ng-class="{active: isGroupShown(category)}">
                             <i class="icon" ng-class="isGroupShown(category) ? 'ion-ios-arrow-up' : 'ion-ios-arrow-down'"></i> &nbsp; {{category.CategoryName}}
                         </ion-item>
+                        
+        <ion-scroll direction="y" class="wide-as-needed ">
                         <div class="items" ng-show="isGroupShown(category)">
                             <ion-item class="item-accordion" ng-repeat="items in category.Items | filter: $root.filteredItems">
                                 <!--<pre>{{items | json}}</pre>-->
@@ -64,7 +67,7 @@
                                             <div class="col s9 text-right padding-lr spinnerArea">
                                                 <div class="text-right">Rs {{items.Price}}
                                                 &nbsp; </div>
-                                                <div>
+                                                <div class="spinControllers">
                                                     <a class="tiny waves-effect waves-teal btn-flat iconMin customizeBtn" ng-if="(items.IsCustomizable == 1)" 
                                                        ng-click="customizeLink(items)"> Customize</a>
                                                     
@@ -106,10 +109,12 @@
                                         </div>
                                     </div>
                                 </div>
-
+                               
+                        </ion-item>     
                         </div>
-
-                        </ion-item>
+                        
+        </ion-scroll>
+            
                     </div>
                 </div>
                 </ion-list>

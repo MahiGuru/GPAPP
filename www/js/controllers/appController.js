@@ -112,12 +112,12 @@
 
 
 
-   appControllers.controller('menuCtrl', function ($scope, appService, $ionicSlideBoxDelegate, $ionicModal, $ionicPopup, $timeout, $interval, $state, $stateParams, AccessScope) {
-
+   appControllers.controller('menuCtrl', function ($scope, appService, $ionicSlideBoxDelegate, $ionicModal, $ionicPopup, $timeout, $interval, $state, $stateParams, AccessScope, $window) {
+       
        /* ---------------------------------- IONIC VIEW ENTER  ------------------------------- */
        $scope.$on('$ionicView.enter', function () { /* TODO :  loading view time do your logic */
            $scope.itemsReview = {};
-
+           console.log($window);
            //REVIEW AND CONFIRM ITEMS SET TO CURRENT ITEMS
            function looptoItems(sections) {
                //alert("Loop inside");
@@ -423,11 +423,12 @@
    /************** 
                    REVIEW CTRL  
                             **************/
-   appControllers.controller('reviewCtrl', function ($scope, appService, $stateParams, AccessScope) {
+   appControllers.controller('reviewCtrl', function ($scope, appService, $stateParams, AccessScope, $window) {
 
 
        $scope.$on('$ionicView.enter', function () {
-
+           
+           $scope.winHeight = ($window.innerHeight);
            /**** 
                 TEMPORARY 
            ****/
@@ -650,8 +651,7 @@
            /**** 
                 /TEMPORARY 
            ****/
-            
-               $scope.loaderVisible = true;
+           $scope.loaderVisible = true;
            /* TODO :  loading view time do your logic */
            appService.get("getusers/" + $stateParams.orderId + "/" + $stateParams.userId, "GET", null).then(function (usersResponse) {
                alert(usersResponse);
@@ -665,8 +665,7 @@
                appService.post("authorizeuser", postData).then(function (userStatus) {
                    alert("CLICK success"); 
                    user.status = userStatus.updatedStatus
-                   console.log(user);
-                   $scope.$apply();
+                   console.log(user); 
                    //$scope.orderSummeryCount = summery
                }, function () {                   
                    alert("some thing went wrong....") 

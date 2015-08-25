@@ -84,9 +84,11 @@
                 <div class="col col-33">Rs {{ totalPrice }}</div>
             </div>
              
-                
-        <a class="button icon-left ion-chevron-left button-calm" href="#/gp/feedback/1/1">Pay By Cash</a>
-        <a class="button icon-right ion-chevron-right button-calm"  href="#/gp/feedback/1/1">Pay By Card</a>
+                <div class="text-center"> 
+                    <a class="waves-effect waves-light btn payByBtn" href="#/gp/feedback/{{orderInfo.orderNumber}}/{{orderInfo.userNumber}}">Pay By Cash</a>
+                    <a class="waves-effect waves-light btn payByBtn" href="#/gp/feedback/{{orderInfo.orderNumber}}/{{orderInfo.userNumber}}">Pay By Cash</a>
+            </div>
+         
 
         </div>
 
